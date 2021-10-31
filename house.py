@@ -18,7 +18,7 @@ pygame.init()
 size = (640,480)
 screen = pygame.display.set_mode(size)
 #Title of new window/screen
-pygame.display.set_caption("My Window")
+pygame.display.set_caption("House")
 #Exit gae flap set to false
 done = False
 sun_x = 40
