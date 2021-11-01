@@ -1,4 +1,6 @@
 import pygame
+import math
+import random
 
 #Global Constants
 
@@ -24,10 +26,10 @@ done = False
 clock = pygame.time.Clock()
 
 ball_width = 20
-x_val = 150
+x_val = 310
 y_val = 200
-x_dir = 1
-y_dir = 1
+x_dir = random.randint(-5,5)
+y_dir = random.randint(-5,5)
 padd_len = 15
 padd_w = 60
 x_padd = 0
@@ -46,19 +48,21 @@ while not done:
         if event.type == pygame.QUIT:
             done = True
         #endif
-        if event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_UP:
-                if y_padd < 1:
-                    y_padd = 0
-                else:
-                    y_padd = y_padd - 20
-            elif event.key == pygame.K_DOWN:
-                if y_padd > 419:
-                    y_padd = 420
-                else:
-                    y_padd = y_padd + 20
-    #next event
     
+    if event.type == pygame.KEYDOWN:
+        keys = pygame.key.get_pressed()
+        if keys[pygame.K_UP]:
+            if y_padd < 1:
+                y_padd = 0
+            else:
+                y_padd = y_padd - 5
+        elif keys[pygame.K_DOWN]:
+            if y_padd > 419:
+                y_padd = 420
+            else:
+                y_padd = y_padd + 5
+#next event
+
     #Game logic goes after this comment
     #screen background is BLACK
     screen.fill (BLACK)
@@ -71,6 +75,8 @@ while not done:
     pygame.display.flip()
     #clock ticks over
     clock.tick(60)
+
+    #ball bounces off walls
     if y_val > 460:
         y_dir = y_dir * -1
     #endif
@@ -80,9 +86,19 @@ while not done:
     if x_val > 620:
         x_dir = x_dir * -1
     #endif
-    if x_val < 0:
-        x_dir = x_dir * -1
+    if x_val < 15:
+        if y_val > (y_padd - 19):
+            if y_val < (y_padd + 59):
+                x_dir = x_dir * -1
+            elif x_val < -20:
+                x_val = 310
+                y_val = 200
+                x_dir = random.randint(-5,5)
+                y_dir = random.randint(-5,5)
+        #endif
     #endif
+    
+    
     x_val += x_dir # x_val = x_val + x_dir
     y_val += y_dir # y_val = y_val + y_dir
 
