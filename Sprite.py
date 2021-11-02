@@ -2,6 +2,8 @@ import pygame
 import math
 import random
 
+from pygame.draw import rect
+
 #Global Constants
 
 #Colours
@@ -24,9 +26,11 @@ pygame.display.set_caption("Snow")
 ##DEFINE the class SNOW which is a SPRITE
 class Snow(pygame.sprite.Sprite):
     #define the CONSTRUCTOR for SNOW
-    def __init__(self, color, width, height):
+    def __init__(self, color, width, height, speed):
         #CALL the SPRITE CONSTRUCTOR
         super().__init__()
+        #set speed of sprite
+        self.speed = speed
         #create SPRITE and fill it with colour
         self.image = pygame.Surface([width,height])
         self.image.fill(color)
@@ -35,13 +39,34 @@ class Snow(pygame.sprite.Sprite):
         self.rect.x = random.randrange(0,600)
         self.rect.y = random.randrange(0,400)
     #end procedure
+    def update(self):
+        self.rect.y = self.rect.y + self.speed
+    #end procedure
 #end class
 
 
 #Exit gae flap set to false
 done = False
+
+#create a list of the snow blocks
+snow_group = pygame.sprite.Group()
+
+#create a list of all sprites
+all_sprites_group = pygame.sprite.Group()
+
 #Manages how fast screen refreshes
 clock = pygame.time.Clock()
+
+
+#create the snowflakes
+number_of_flakes = 50 #50 snowflakes
+for x in range (number_of_flakes):
+    my_snow = Snow(WHITE, 5, 5, 1) #snowflakes made white with dimensions 5 by 5
+    snow_group.add (my_snow) #adds the new snowflake to the group of snowflakes
+    all_sprites_group.add (my_snow) #adds this snowflake to group of sprites
+
+#next
+
 
 
 ### GAME LOOP
@@ -58,13 +83,13 @@ while not done:
     #next event
     
     #Game logic goes after this comment
+    all_sprites_group.update()
+
     #screen background is BLACK
     screen.fill (BLACK)
     
     #draw here
-
-    pygame.draw.rect(screen, BLUE, (220,165,200,150))
-    pygame.draw.circle(screen, YELLOW, (40,100),40,0)
+    all_sprites_group.draw (screen)
     #flip display to reveal new postion of objects (refreshes screen)
     pygame.display.flip()
     #clock ticks over
