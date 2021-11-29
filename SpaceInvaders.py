@@ -67,26 +67,32 @@ class Player(pygame.sprite.Sprite):
 
 
     def update(self):
-        if self.rect.x > 579:
+        if self.rect.x > 580:
             self.rect.x = 580
-        elif self.rect.x < 1:
+        elif self.rect.x < 0:
             self.rect.x = 0
         else:
-            self.rect.x = self.rect.x + self.speed
-
-
+            self.rect.x += self.speed
+    
+    ## Player controls
+    def key_check(self):
         for event in pygame.event.get():
+
+            if event.type == pygame.QUIT:
+                return True
 
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_LEFT:
-                    self.speed=-5
+                    self.speed = -5
                 elif event.key == pygame.K_RIGHT:
-                    self.speed=5
+                    self.speed = 5
+            
+            
             elif event.type == pygame.KEYUP:
                 if event.key == pygame.K_LEFT or event.key == pygame.K_RIGHT:
                     self.speed = 0
-        
 
+        
 done = False
 
 #create a list of the snow blocks
@@ -120,13 +126,13 @@ all_sprites_group.add (my_player)
 while not done:
 
     #user input and controls
+        
 
-    for event in pygame.event.get():
-
-        if event.type == pygame.QUIT:
-            done =  True
     
     all_sprites_group.update()
+    ret = my_player.key_check()
+    if ret == True:
+        done= True
 
     #screen background is BLACK
     screen.fill (BLACK)
