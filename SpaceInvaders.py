@@ -64,6 +64,7 @@ class Player(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect.x = 300
         self.rect.y = 460
+        self.lives = 5
 
 
     def update(self):
@@ -104,6 +105,8 @@ players_group = pygame.sprite.Group()
 #create a list of all sprites
 all_sprites_group = pygame.sprite.Group()
 
+
+
 clock = pygame.time.Clock()
 
 
@@ -121,6 +124,8 @@ players_group.add(my_player)
 all_sprites_group.add (my_player)
 
 
+
+
 ### GAME LOOP
 
 while not done:
@@ -133,6 +138,17 @@ while not done:
     ret = my_player.key_check()
     if ret == True:
         done= True
+    
+    if my_player.lives == 0:
+        done = True
+
+
+
+    player_hit_group = pygame.sprite.spritecollide(my_player, invaders_group, True)
+
+    for foo in player_hit_group:
+        my_player.lives = my_player.lives - 1 
+
 
     #screen background is BLACK
     screen.fill (BLACK)

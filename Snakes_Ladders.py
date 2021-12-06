@@ -3,12 +3,21 @@ import random
 
 Done = False
 
-num_players = int(input("how many players do you want"))
+num_players = int(input("how many players do you want, 1-5"))
+
+s_l_start = [93, 86, 83, 80, 67, 57, 44, 35, 22, 18,   5, 15, 36, 48, 60, 75] #16 items
+s_l_end =   [33, 70, 65, 61, 20, 32, 28, 18, 10, 2,    12, 38, 42, 85, 71, 90]
+names_list = [1, 2, 3, 4, 5]
+snakesladder_list = []
+players = []
+
+
 ###Classes
 
 class Board():
     def __init__(self):
         self.size = 100
+        
         
     #player class
     class Player():
@@ -16,22 +25,41 @@ class Board():
             self.playerpos = 0
             self.playerName = self.playerName
 
-    players = []
-    for count in range(1, num_players):
-        players.append(Player(count))
 
-    #snakes and ladders clas
-    class S_L():
-        def __init__(self, obsStart, obsEnd):
+        #roll dice and update position
+        def rolldice(self):
+            self.playerpos = self.playerpos + (random.randint(1,6))
+
+
+        def update(self):
+            self.playerpos = self.rolldice(self.position)
+            print("Player", self.playerName, ":", self.playerpos)
+            if self.playerpos > 99:
+                print("Player", self.playerName, "wins")        
+                Done = True
+
+
+    for count in range(1, num_players):
+        p = Player
+        p.playerName = names_list[count-1]
+        players.append(p(count))
+
+
+    #snakes and ladders class
+    class SnakesLadder():
+        def __init__(self):
             self.obstart = self.obstart
             self.obsend = self.obsend
-            
-        def move_player(self):
 
-
-    snakesladder = []
+    
     for count in range(1, 16):
-        snakesladder.append(S_L(random.randint(2,99)),(random.randint(2,99)))
+        s = SnakesLadder()
+        s.obstart = s_l_start[count]
+        s.obsend = s_l_end[count]
+        snakesladder_list.append(s)
+    
+
+
 
         
 
@@ -41,4 +69,5 @@ class Board():
 while Done == False:
     if str(input("input exit to exit game, enter anything else to play again")) == "exit":
         Done == True
-
+    else:
+        print(snakesladder_list)
