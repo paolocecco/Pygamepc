@@ -1,0 +1,95 @@
+import pygame
+
+#Global Constants
+
+#Colours
+BLACK = (0,0,0)
+WHITE = (255,255,255)
+BLUE = (50,50,255)
+YELLOW = (255,255,0)
+
+#Initialise PyGame
+
+pygame.init()
+
+#Blank Screen
+
+size = (640,480)
+screen = pygame.display.set_mode(size)
+#Title of new window/screen
+pygame.display.set_caption("Square Explore")
+#Exit gae flap set to false
+done = False
+
+#CLASSES::::
+
+class Game():
+    __init__(self):
+
+
+
+
+class Player(pygame.sprite.Sprite):
+    def __init__(self, skin, player_name, width, height):
+        super().__init__
+        self.color = skin
+        self.name = player_name
+        self.image = pygame.Surface([width,height])
+        self.image.fill(skin)
+        self.rect = self.image.get_rect()
+        self.rect.x = 10
+        self.rect.y = 10
+
+
+class Enemies(pygame.sprite.Sprite):
+    __init__()
+
+
+class Lives(pygame.sprite.Sprite):
+    __init__()
+
+
+class Maps(pygame.sprite.Sprite):
+    __init__()
+
+
+
+
+
+
+
+
+
+
+
+#Manages how fast screen refreshes
+clock = pygame.time.Clock()
+
+
+### GAME LOOP
+
+while not done:
+
+    #user input and controls
+
+    for event in pygame.event.get():
+
+        if event.type == pygame.QUIT:
+            done = True
+        #endif
+    #next event
+    
+    #Game logic goes after this comment
+    #screen background is BLACK
+    screen.fill (BLACK)
+    
+    #draw here
+
+    #flip display to reveal new postion of objects (refreshes screen)
+    pygame.display.flip()
+    #clock ticks over
+    clock.tick(60)
+
+#endwhile - End of game loop
+
+pygame.quit
