@@ -90,13 +90,7 @@ class Player(pygame.sprite.Sprite):
             self.rect.y = 0
         else:
             self.rect.y += self.player_update_speed[1]
-            player_hit_list = pygame.sprite.spritecollide(Player, map_list, False)
-        for foo in player_hit_list:
-            pacman.player_speed_update(0,0)
-            pacman.rect.x = pacman_old_x
-            pacman.rect.y = pacman_old_y
-            pacman_old_x = pacman.rect.x
-            pacman_old_y = pacman.rect.y
+            
 
 
 
@@ -138,7 +132,13 @@ while not done:
     
     
     #Game logic goes after this comment
-    
+    player_hit_list = pygame.sprite.spritecollide(Player, map_list, False)
+    for foo in player_hit_list:
+        pacman.player_speed_update(0,0)
+        pacman.rect.x = pacman_old_x
+        pacman.rect.y = pacman_old_y
+    pacman_old_x = pacman.rect.x
+    pacman_old_y = pacman.rect.y
 
     all_sprites_list.update()
     

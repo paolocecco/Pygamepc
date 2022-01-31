@@ -14,7 +14,7 @@ pygame.init()
 
 #Blank Screen
 
-size = (640,480)
+size = (960,720)
 screen = pygame.display.set_mode(size)
 #Title of new window/screen
 pygame.display.set_caption("Square Explore")
@@ -23,34 +23,34 @@ done = False
 
 #CLASSES::::
 
-class Game():
-    __init__(self):
+#class Game():
+ #   __init__(self):
 
 
 
 
 class Player(pygame.sprite.Sprite):
     def __init__(self, skin, player_name, width, height):
-        super().__init__
+        super().__init__()
         self.color = skin
         self.name = player_name
         self.image = pygame.Surface([width,height])
         self.image.fill(skin)
         self.rect = self.image.get_rect()
         self.rect.x = 10
-        self.rect.y = 10
+        self.rect.y = 600
 
 
-class Enemies(pygame.sprite.Sprite):
-    __init__()
+#class Enemies(pygame.sprite.Sprite):
+ #   __init__()
 
 
-class Lives(pygame.sprite.Sprite):
-    __init__()
+#class Lives(pygame.sprite.Sprite):
+ #   __init__()
 
 
-class Maps(pygame.sprite.Sprite):
-    __init__()
+#class Maps(pygame.sprite.Sprite):
+ #   __init__()
 
 
 
@@ -64,6 +64,24 @@ class Maps(pygame.sprite.Sprite):
 
 #Manages how fast screen refreshes
 clock = pygame.time.Clock()
+
+
+
+
+
+#creates a group of player(s)
+player_group = pygame.sprite.Group()
+
+#create a list of all sprites
+all_sprites_group = pygame.sprite.Group()
+
+
+
+player_1 = Player(BLUE, "Player 1", 20, 20)
+player_group.add(player_1)
+all_sprites_group.add(player_1)
+
+
 
 
 ### GAME LOOP
@@ -83,6 +101,8 @@ while not done:
     #screen background is BLACK
     screen.fill (BLACK)
     
+
+    all_sprites_group.draw (screen)    
     #draw here
 
     #flip display to reveal new postion of objects (refreshes screen)
