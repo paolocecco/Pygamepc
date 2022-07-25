@@ -1,3 +1,4 @@
+#imports python libraries
 import pygame
 import math
 
@@ -11,6 +12,7 @@ size = (960,720)
 screen = pygame.display.set_mode(size)
 #Title of new window/screen
 pygame.display.set_caption("Square Explore")
+
 #Exit gae flap set to false
 done = False
 
@@ -27,6 +29,8 @@ GOLD = (255,215,0)
 RED = (255,0,0)
 GREY = (150,150,150)
 
+
+#Icons for objects
 Heart_icon = pygame.image.load('hearticon.png').convert_alpha()
 Heart_icon = pygame.transform.scale(Heart_icon, (70,35))
 
@@ -42,8 +46,11 @@ Block_texture_level1 = pygame.transform.scale(Block_texture_level1, (40,40))
 Background_level1 = pygame.image.load('backgroundimageL1.jpg').convert_alpha()
 Background_level1 = pygame.transform.scale(Background_level1, (960,720))
 
+Coin_icon = pygame.image.load('coinicon.png').convert_alpha()
+Coin_icon = pygame.transform.scale(Coin_icon, (30,30))
 
 
+#map list for blocks
 map_1_list=[[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0], # =24 columns, # = 18 rows
             [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
             [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
@@ -64,14 +71,21 @@ map_1_list=[[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0], # =24 columns, # 
             [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1]]
 
 
+#list of locations for static enemies
 static_enemy_location_list_x = [520, 560, 520, 560, 920, 920, 360]
 static_enemy_location_list_y = [560, 560, 480, 480, 560, 520, 120]
 
+#list of locations for horizontal moving enemies
 h_enemy_location_list_x = [280]
 h_enemy_location_list_y = [450]
 
+#list of locations for vertical moving enemies
 v_enemy_location_list_x = []
 v_enemy_location_list_y = []
+
+#list of locations for coins
+coins_location_list_x = [85, 885, 325,   5, 445]
+coins_location_list_y = [85, 565, 445, 365, 125]
 
 
 
@@ -85,7 +99,7 @@ v_enemy_location_list_y = []
 
 
 
-
+#create class for player
 class Player(pygame.sprite.Sprite):
     def __init__(self, skin, player_name):
         super().__init__()
@@ -96,33 +110,29 @@ class Player(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect.x = 10
         self.rect.y = 680
-        self.speed = 0
+        self.speed = 5
+
+    def get_x(self):
+        return(Player.rect.x)
+
+    def set_x(self, newx: int):
+        Player.rect.x = newx
+        
+    def get_y(self):
+        return(Player.rect.y)
+
+    def set_y(self, newy: int):
+        Player.rect.y = newy
+
+    def get_speed(self):
+        return(Player.speed)
+
+    def set_speed(self, newspeed):
+        Player.speed = newspeed
 
 
 
-    # def update(self):
-    #     if self.rect.x > 959:
-    #         self.rect.x = 959
-    #     elif self.rect.x < 1:
-    #         self.rect.x = 0
-    #     else:
-    #         self.rect.x = self.rect.x + self.speed
-
-    #     for event in pygame.event.get():
-
-    #         if event.type == pygame.QUIT:
-    #             done = True
-    #         elif event.type == pygame.KEYDOWN:
-    #             if event.key == pygame.K_LEFT:
-    #                 self.speed=-5
-    #             elif event.key == pygame.K_RIGHT:
-    #                 self.speed=5
-    #         elif event.type == pygame.KEYUP:
-    #             if event.key == pygame.K_LEFT or event.key == pygame.K_RIGHT:
-    #                 self.speed = 0
-    #next event
-
-
+#create static enemy class
 class Enemies(pygame.sprite.Sprite):
     def __init__(self, color, xpos, ypos):
         super().__init__()
@@ -134,7 +144,7 @@ class Enemies(pygame.sprite.Sprite):
 
 
 
-
+#create vertical enemy class from previous enemy class
 class Vertical_moving_enemies(Enemies):
     def __init__(self, color, xpos, ypos, speed, travel_ypos):
         super().__init__(color, xpos, ypos)
@@ -147,7 +157,7 @@ class Vertical_moving_enemies(Enemies):
         self.limit_y = travel_ypos
         self.enemy_speed = speed
     
-
+#create horizontal enemy moving class
 class Horizontal_moving_enemies(Enemies):
     def __init__(self, color, xpos, ypos, speed, travel_xpos):
         super().__init__(color, xpos, ypos)
@@ -181,6 +191,17 @@ class Maps(pygame.sprite.Sprite):
         self.rect.x = x_ref
         self.rect.y = y_ref
 
+
+#CREATE COIN CLASS
+class Coins(pygame.sprite.Sprite):
+    def __init__(self, x_ref, y_ref):
+        super().__init__()
+        self.image = Coin_icon
+        self.rect = self.image.get_rect()
+        self.rect.x = x_ref
+        self.rect.y = y_ref
+
+
 #class for the finish flag on levels
 class Finish_Flag(pygame.sprite.Sprite):
     def __init__(self, color, width, height, x_ref, y_ref):
@@ -191,83 +212,218 @@ class Finish_Flag(pygame.sprite.Sprite):
         self.rect.x = x_ref
         self.rect.y = y_ref
 
+class Game():
+    def __init__(self):
+        pass
+
+    def logic():
+
+        #Manages how fast screen refreshes
+        clock = pygame.time.Clock()
+
+        #create group of background images
+        background_group = pygame.sprite.Group()
+
+        #creates a group of player(s)
+        player_group = pygame.sprite.Group()
+
+        #create group of enemies
+        enemies_group = pygame.sprite.Group()
+
+        #create group of lives
+        lives_list = pygame.sprite.Group()
+
+        #create list of coins
+        coins_list = pygame.sprite.Group()
+
+        #create a list for the map walls
+        wall_list = pygame.sprite.Group()
+
+
+        #create a list of all sprites
+        all_sprites_group = pygame.sprite.Group()
+
+
+        #create map
+        for y in range(18):
+            for x in range(24):
+                if map_1_list[y][x] == 1:
+                    my_wall = Maps(x*40, y*40)
+                    wall_list.add(my_wall)
+                    all_sprites_group.add(my_wall)
+
+        #create player 1
+        player_1 = Player(BLUE, "Player 1")
+        player_group.add(player_1)
+        all_sprites_group.add(player_1)
+
+        #create still enemies
+        for i in range(len(static_enemy_location_list_x)):
+            static_enemy = Enemies(RED, static_enemy_location_list_x[i], static_enemy_location_list_y[i])
+            #add enemies into sprite groups
+            enemies_group.add(static_enemy)
+            all_sprites_group.add(static_enemy)
+
+
+        #create enemies which move vertically
+        for i in range(len(v_enemy_location_list_x)):
+            moving_enemy = Vertical_moving_enemies(GREY, v_enemy_location_list_x[i], v_enemy_location_list_y[i], 1, 550)
+            enemies_group.add(moving_enemy)
+            all_sprites_group.add(moving_enemy)
+
+        #create enemies which move horizontally
+        for i in range(len(h_enemy_location_list_x)):
+            moving_enemy = Horizontal_moving_enemies(GREY, h_enemy_location_list_x[i], h_enemy_location_list_y[i], 1, 550)
+            enemies_group.add(moving_enemy)
+            all_sprites_group.add(moving_enemy)
+
+
+        #create finish flag object
+        finish = Finish_Flag(GOLD, 10, 80, 900, 40)
+        all_sprites_group.add(finish)
+
+        #create lives object
+        live1 = Lives(700, 5)
+        lives_list.add(live1)
+        live2 = Lives(730, 5)
+        lives_list.add(live2)
+        live3 = Lives(760, 5)
+        lives_list.add(live3)
+        live4 = Lives(790, 5)
+        lives_list.add(live4)
+        live5 = Lives(820, 5)
+        lives_list.add(live5)
+        all_sprites_group.add(lives_list)
+
+        #create coin objects
+        for i in range(len(coins_location_list_x)):
+            coin = Coins(coins_location_list_x[i], coins_location_list_y[i])
+            coins_list.add(coin)
+            all_sprites_group.add(coin)
+
+
+        screen.fill (BLACK)
+    
+        all_sprites_group.update()
+        #screen.blit(Background_level1,(0,0))
+        all_sprites_group.draw (screen)
+        
+        #draw here
+
+        #flip display to reveal new postion of objects (refreshes screen)
+        pygame.display.flip()
+        #clock ticks over
+        clock.tick(60)
+
+    # def update():
+    #     keys = pygame.key.get_pressed()
+    #     #player movement keys    
+    #     if event.type == pygame.KEYDOWN:
+
+    #         if keys[pygame.K_LEFT]:
+    #             player_1.rect.x = player_1.rect.x - 5
+    #         elif keys[pygame.K_RIGHT]:
+    #             player_1.rect.x = player_1.rect.x + 5 
+    #         elif event.key == pygame.K_RIGHT:
+    #             self.speed=5
+    #         elif event.type == pygame.KEYUP:
+    #             if event.key == pygame.K_LEFT or event.key == pygame.K_RIGHT:
+    #                 self.speed = 0
 
 
 
 
 
-
-
-
-#Manages how fast screen refreshes
-clock = pygame.time.Clock()
-
+# #Manages how fast screen refreshes
+# clock = pygame.time.Clock()
 
 
 
 
-#creates a group of player(s)
-player_group = pygame.sprite.Group()
+# #create group of background images
+# background_group = pygame.sprite.Group()
 
-enemies_group = pygame.sprite.Group()
+# #creates a group of player(s)
+# player_group = pygame.sprite.Group()
 
-lives_list = pygame.sprite.Group()
+# #create group of enemies
+# enemies_group = pygame.sprite.Group()
 
+# #create group of lives
+# lives_list = pygame.sprite.Group()
 
+# #create list of coins
+# coins_list = pygame.sprite.Group()
 
-#create a list of all sprites
-all_sprites_group = pygame.sprite.Group()
-
-wall_list = pygame.sprite.Group()
-
-#create map
-for y in range(18):
-    for x in range(24):
-        if map_1_list[y][x] == 1:
-            my_wall = Maps(x*40, y*40)
-            wall_list.add(my_wall)
-            all_sprites_group.add(my_wall)
-
-#create player 1
-player_1 = Player(BLUE, "Player 1")
-player_group.add(player_1)
-all_sprites_group.add(player_1)
-
-#create still enemies
-for i in range(len(static_enemy_location_list_x)):
-    static_enemy = Enemies(RED, static_enemy_location_list_x[i], static_enemy_location_list_y[i])
-    #add enemies into sprite groups
-    enemies_group.add(static_enemy)
-    all_sprites_group.add(static_enemy)
+# #create a list for the map walls
+# wall_list = pygame.sprite.Group()
 
 
-#create enemies which move forward
-for i in range(len(v_enemy_location_list_x)):
-    moving_enemy = Vertical_moving_enemies(GREY, v_enemy_location_list_x[i], v_enemy_location_list_y[i], 1, 550)
-    enemies_group.add(moving_enemy)
-    all_sprites_group.add(moving_enemy)
+# #create a list of all sprites
+# all_sprites_group = pygame.sprite.Group()
 
-for i in range(len(h_enemy_location_list_x)):
-    moving_enemy = Horizontal_moving_enemies(GREY, h_enemy_location_list_x[i], h_enemy_location_list_y[i], 1, 550)
-    enemies_group.add(moving_enemy)
-    all_sprites_group.add(moving_enemy)
+
+# #creates teh background for level1
+# #background_group.add(Background_level1)
 
 
 
-finish = Finish_Flag(GOLD, 10, 80, 900, 40)
-all_sprites_group.add(finish)
+# #create map
+# for y in range(18):
+#     for x in range(24):
+#         if map_1_list[y][x] == 1:
+#             my_wall = Maps(x*40, y*40)
+#             wall_list.add(my_wall)
+#             all_sprites_group.add(my_wall)
 
-live1 = Lives(700, 5)
-lives_list.add(live1)
-live2 = Lives(730, 5)
-lives_list.add(live2)
-live3 = Lives(760, 5)
-lives_list.add(live3)
-live4 = Lives(790, 5)
-lives_list.add(live4)
-live5 = Lives(820, 5)
-lives_list.add(live5)
-all_sprites_group.add(lives_list)
+# #create player 1
+# player_1 = Player(BLUE, "Player 1")
+# player_group.add(player_1)
+# all_sprites_group.add(player_1)
+
+# #create still enemies
+# for i in range(len(static_enemy_location_list_x)):
+#     static_enemy = Enemies(RED, static_enemy_location_list_x[i], static_enemy_location_list_y[i])
+#     #add enemies into sprite groups
+#     enemies_group.add(static_enemy)
+#     all_sprites_group.add(static_enemy)
+
+
+# #create enemies which move vertically
+# for i in range(len(v_enemy_location_list_x)):
+#     moving_enemy = Vertical_moving_enemies(GREY, v_enemy_location_list_x[i], v_enemy_location_list_y[i], 1, 550)
+#     enemies_group.add(moving_enemy)
+#     all_sprites_group.add(moving_enemy)
+
+# #create enemies which move horizontally
+# for i in range(len(h_enemy_location_list_x)):
+#     moving_enemy = Horizontal_moving_enemies(GREY, h_enemy_location_list_x[i], h_enemy_location_list_y[i], 1, 550)
+#     enemies_group.add(moving_enemy)
+#     all_sprites_group.add(moving_enemy)
+
+
+# #create finish flag object
+# finish = Finish_Flag(GOLD, 10, 80, 900, 40)
+# all_sprites_group.add(finish)
+
+# #create lives object
+# live1 = Lives(700, 5)
+# lives_list.add(live1)
+# live2 = Lives(730, 5)
+# lives_list.add(live2)
+# live3 = Lives(760, 5)
+# lives_list.add(live3)
+# live4 = Lives(790, 5)
+# lives_list.add(live4)
+# live5 = Lives(820, 5)
+# lives_list.add(live5)
+# all_sprites_group.add(lives_list)
+
+# #create coin objects
+# for i in range(len(coins_location_list_x)):
+#     coin = Coins(coins_location_list_x[i], coins_location_list_y[i])
+#     coins_list.add(coin)
+#     all_sprites_group.add(coin)
 
 
 #create collision list
@@ -292,31 +448,43 @@ while not done:
   
   
     for event in pygame.event.get():
-
-
+        
+        
         if event.type == pygame.QUIT:
             done = True
+        #player movement keys    
+        # if event.type == pygame.KEYDOWN:
+
+        #     if keys[pygame.K_LEFT]:
+        #         player_1.rect.x = player_1.rect.x - 5
+        #     elif keys[pygame.K_RIGHT]:
+        #         player_1.rect.x = player_1.rect.x + 5 
+                # elif event.key == pygame.K_RIGHT:
+                #      self.speed=5
+                # elif event.type == pygame.KEYUP:
+                #     if event.key == pygame.K_LEFT or event.key == pygame.K_RIGHT:
+                #         self.speed = 0
+
+        
         #endif
     #next event
     
     #Game logic goes after this comment
 
-
-
-
-
-
+    Game.logic()
     #screen background is BLACK
-    screen.fill (BLACK)
+    # screen.fill (BLACK)
     
-    all_sprites_group.update()
-    all_sprites_group.draw (screen)    
-    #draw here
+    # all_sprites_group.update()
+    # #screen.blit(Background_level1,(0,0))
+    # all_sprites_group.draw (screen)
+       
+    # #draw here
 
-    #flip display to reveal new postion of objects (refreshes screen)
-    pygame.display.flip()
-    #clock ticks over
-    clock.tick(60)
+    # #flip display to reveal new postion of objects (refreshes screen)
+    # pygame.display.flip()
+    # #clock ticks over
+    # clock.tick(60)
 
 #endwhile - End of game loop
 
