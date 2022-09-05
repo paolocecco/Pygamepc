@@ -328,7 +328,8 @@ class Game():
             elif keys[pygame.K_RIGHT]:
                 self.player_1.rect.x += 10
             elif keys[pygame.K_UP]:
-                self.player_1.rect.y -= 10
+               # if self.player_1.rect.x > SCREEN_H - 42:
+                    self.player_1.rect.y -= 10
         else:
             if (self.player_1.rect.y <= SCREEN_H - PLAYER_HEIGHT):
                 self.player_1.rect.y += 3
@@ -337,6 +338,10 @@ class Game():
         #Game logic goes after this comment
         wall_hit_list = pygame.sprite.spritecollide(self.player_1, self.wall_list, False)
         for collision in wall_hit_list:
+            print(collision)
+        
+        s_enemy_hit_list = pygame.sprite.spritecollide(self.player_1, self.enemies_group, False)
+        for collision in s_enemy_hit_list:
             print(collision)
             #self.player_1
 
