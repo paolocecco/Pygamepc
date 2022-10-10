@@ -33,6 +33,8 @@ GOLD = (255,215,0)
 RED = (255,0,0)
 GREY = (150,150,150)
 
+font = pygame.font.SysFont(None, 25)
+
 
 #Icons for objects
 Heart_icon = pygame.image.load('hearticon.png').convert_alpha()
@@ -267,6 +269,9 @@ class Game():
         self.all_sprites_group.add(self.player_1)        
         self.init_map()
 
+        self.coin_num  = 0
+
+        self.num_lives = 5
 
     def init_map(self):
         #create map
@@ -306,7 +311,7 @@ class Game():
         self.all_sprites_group.add(finish)
 
         #create lives object
-        self.num_lives = 4
+        
         for x in range(self.num_lives):
             for z in range(700, 730 +(x*30), 30):
                 heart = Lives(z, 5)
@@ -331,6 +336,9 @@ class Game():
         self.all_sprites_group.update()
         #screen.blit(Background_level1,(0,0))
         self.all_sprites_group.draw (screen)
+
+        coin_num = font.render(str(self.coin_num), True, WHITE)
+        screen.blit(coin_num, (50,23))
         
         #draw here
 
@@ -404,7 +412,8 @@ class Game():
 
         coin_hit_list = pygame.sprite.spritecollide(self.player_1, self.coins_list, False)
         for collision in coin_hit_list:
-            print(collision)
+            self.coin_num = self.coin_num + 1
+            #print(collision)
 
         
 
