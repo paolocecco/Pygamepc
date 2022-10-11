@@ -252,7 +252,7 @@ class Game():
         self.lives_list = pygame.sprite.Group()
 
         #create list of coins
-        self.coins_list = pygame.sprite.Group()
+        self.coins_group = pygame.sprite.Group()
 
         #create display of number of coins
         self.coin_display_list = pygame.sprite.Group()
@@ -272,18 +272,6 @@ class Game():
         self.coin_num  = 0
 
         self.num_lives = 5
-
-    def init_map(self):
-        #create map
-        for y in range(18):
-            for x in range(24):
-                if map_1_list[y][x] == 1:
-                    my_wall = Maps(x*40, y*40)
-                    self.wall_list.add(my_wall)
-                    self.all_sprites_group.add(my_wall)
-
-
-    def logic(self):
 
         #create still enemies
         for i in range(len(static_enemy_location_list_x)):
@@ -321,13 +309,29 @@ class Game():
         #create coin objects
         for i in range(len(coins_location_list_x)):
             coin = Coins(coins_location_list_x[i], coins_location_list_y[i])
-            self.coins_list.add(coin)
+            self.coins_group.add(coin)
             self.all_sprites_group.add(coin)
 
         #create display of coin count
         coin_count = Coins_display(20, 20)
         self.coin_display_list.add(coin_count)
         self.all_sprites_group.add(coin_count)
+
+
+
+    def init_map(self):
+        #create map
+        for y in range(18):
+            for x in range(24):
+                if map_1_list[y][x] == 1:
+                    my_wall = Maps(x*40, y*40)
+                    self.wall_list.add(my_wall)
+                    self.all_sprites_group.add(my_wall)
+
+
+    def logic(self):
+
+        pass
 
 
     def draw(self):
@@ -347,7 +351,7 @@ class Game():
         #clock ticks over
         self.clock.tick(60)
 
-    def handle_event(self):
+    def handle_event_and_collision(self):
         keys = pygame.key.get_pressed()
        
         #player movement keys
@@ -410,11 +414,17 @@ class Game():
         self.draw()
 
 
-        coin_hit_list = pygame.sprite.spritecollide(self.player_1, self.coins_list, False)
+        coin_hit_list = pygame.sprite.spritecollide(self.player_1, self.coins_group, True)
         for collision in coin_hit_list:
             self.coin_num = self.coin_num + 1
             #print(collision)
 
+    # def run(self):
+    #     self.__init__()
+    #     self.init_map()
+    #     self.logic()
+    #     self.handle_event_and_collision()
+    #     self.handle_collisions()
         
 
 
@@ -436,8 +446,10 @@ while not done:
     #Game logic goes after this comment
     game.draw()
     game.logic()
-    game.handle_event()
+    game.handle_event_and_collision()
     game.handle_collisions()
+
+    # game.run()
     #screen background is BLACK
     # screen.fill (BLACK)
     
