@@ -248,6 +248,9 @@ class Game():
         #create group of enemies
         self.enemies_group = pygame.sprite.Group()
 
+        #create finish flag group
+        self.finish_group = pygame.sprite.Group()
+
         #create group of lives
         self.lives_list = pygame.sprite.Group()
 
@@ -295,7 +298,8 @@ class Game():
 
 
         #create finish flag object
-        finish = Finish_Flag(GOLD, 10, 80, 900, 40)
+        finish = Finish_Flag(GOLD, 40, 80, 900, 40)
+        self.finish_group.add(finish)
         self.all_sprites_group.add(finish)
 
         #create lives object
@@ -401,7 +405,7 @@ class Game():
         
         self.player_1_old_x = self.player_1.rect.x
         self.player_1_old_y = self.player_1.rect.y
-        self.draw()
+
         
         s_enemy_hit_list = pygame.sprite.spritecollide(self.player_1, self.enemies_group, False)
         for collision in s_enemy_hit_list:
@@ -411,13 +415,25 @@ class Game():
             self.player_1.rect.y = 680
             # self.num_lives = self.num_lives - 1
 
-        self.draw()
 
 
         coin_hit_list = pygame.sprite.spritecollide(self.player_1, self.coins_group, True)
         for collision in coin_hit_list:
             self.coin_num = self.coin_num + 1
-            #print(collision)
+            
+        
+
+        flag_hit_list = pygame.sprite.spritecollide(self.player_1, self.finish_group, False)
+        for collision in flag_hit_list:
+            self.coin_num = self.coin_num + 5
+            self.player_1.speed_x = 0
+            self.player_1.speed_y = 0
+            self.player_1.rect.x = 10
+            self.player_1.rect.y = 680
+        
+        self.draw()
+
+
 
     # def run(self):
     #     self.__init__()
