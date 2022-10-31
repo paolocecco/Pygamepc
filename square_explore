@@ -95,6 +95,10 @@ v_enemy_location_list_y = []
 coins_location_list_x = [85, 885, 325,   5, 445]
 coins_location_list_y = [85, 565, 445, 365, 125]
 
+LIVES_NUM = 5
+
+COINS_NUM = 0
+
 
 
 
@@ -167,6 +171,19 @@ class Vertical_moving_enemies(Enemies):
         self.original_y = ypos
         self.limit_y = travel_ypos
         self.enemy_speed = speed
+
+        self.speed_y = 0
+
+
+    def update(self):
+        for i in range(len(v_enemy_location_list_x)):
+            if self.rect.y == (v_enemy_location_list_y[i]):
+                self.enemy_speed = 2
+            if self.rect.y == (v_enemy_location_list_y[i] + 80):
+                self.enemy_speed = -2
+
+        
+        self.rect.y += self.enemy_speed
     
 #create horizontal enemy moving class
 class Horizontal_moving_enemies(Enemies):
@@ -180,7 +197,18 @@ class Horizontal_moving_enemies(Enemies):
         self.original_x = xpos
         self.limit_x = travel_xpos
         self.enemy_speed = speed
+
+        self.speed_x = 0
+
+    def update(self):
+        for i in range(len(h_enemy_location_list_x)):
+            if self.rect.x == (h_enemy_location_list_y[i] - 220):
+                self.enemy_speed = 1
+            if self.rect.x == (h_enemy_location_list_y[i] - 120):
+                self.enemy_speed = -1
+
         
+        self.rect.x += self.enemy_speed
 
 
 #class to show lives
@@ -191,6 +219,7 @@ class Lives(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect.x = x_ref
         self.rect.y = y_ref
+        
 
 
 #map class
@@ -211,7 +240,7 @@ class Coins(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect.x = x_ref
         self.rect.y = y_ref
-
+        
 
 #CREATE COIN COUNT CLASS
 class Coins_display(pygame.sprite.Sprite):
@@ -236,6 +265,10 @@ class Finish_Flag(pygame.sprite.Sprite):
 
 class Game():
     def __init__(self):
+
+        #set game value
+        self.game_val = str(1)
+
         #Manages how fast screen refreshes
         self.clock = pygame.time.Clock()
 
@@ -244,6 +277,11 @@ class Game():
 
         #creates a group of player(s)
         self.player_group = pygame.sprite.Group()
+
+        #create moving enemies groups
+        self.v_enemies_group = pygame.sprite.Group()
+
+        self.h_enemies_group = pygame.sprite.Group()
 
         #create group of enemies
         self.enemies_group = pygame.sprite.Group()
@@ -272,9 +310,10 @@ class Game():
         self.all_sprites_group.add(self.player_1)        
         self.init_map()
 
-        self.coin_num  = 0
+        self.num_lives = LIVES_NUM
 
-        self.num_lives = 5
+        self.coin_num  = COINS_NUM
+
 
         #create still enemies
         for i in range(len(static_enemy_location_list_x)):
@@ -286,15 +325,17 @@ class Game():
 
         #create enemies which move vertically
         for i in range(len(v_enemy_location_list_x)):
-            moving_enemy = Vertical_moving_enemies(GREY, v_enemy_location_list_x[i], v_enemy_location_list_y[i], 1, 550)
-            self.enemies_group.add(moving_enemy)
-            self.all_sprites_group.add(moving_enemy)
+            self.v_moving_enemy = Vertical_moving_enemies(GREY, v_enemy_location_list_x[i], v_enemy_location_list_y[i], 2, 550)
+            self.v_enemies_group.add(self.v_moving_enemy)
+            self.enemies_group.add(self.v_moving_enemy)
+            self.all_sprites_group.add(self.v_moving_enemy)
 
         #create enemies which move horizontally
         for i in range(len(h_enemy_location_list_x)):
-            moving_enemy = Horizontal_moving_enemies(GREY, h_enemy_location_list_x[i], h_enemy_location_list_y[i], 1, 550)
-            self.enemies_group.add(moving_enemy)
-            self.all_sprites_group.add(moving_enemy)
+            self.h_moving_enemy = Horizontal_moving_enemies(GREY, h_enemy_location_list_x[i], h_enemy_location_list_y[i], 2, 550)
+            self.h_enemies_group.add(self.h_moving_enemy)
+            self.enemies_group.add(self.h_moving_enemy)
+            self.all_sprites_group.add(self.h_moving_enemy)
 
 
         #create finish flag object
@@ -336,17 +377,19 @@ class Game():
     def logic(self):
 
         pass
+        
 
 
     def draw(self):
         screen.fill (BLACK)
-    
+        screen.blit(Background_level1, (0,0))
         self.all_sprites_group.update()
-        #screen.blit(Background_level1,(0,0))
-        self.all_sprites_group.draw (screen)
+        if self.game_val == str(1):
+            #screen.blit(Background_level1,(0,0))
+            self.all_sprites_group.draw (screen)
 
         coin_num = font.render(str(self.coin_num), True, WHITE)
-        screen.blit(coin_num, (50,23))
+        screen.blit(coin_num, (SCREEN_W/20,23))
         
         #draw here
 
@@ -388,6 +431,9 @@ class Game():
         elif (self.player_1.rect.y > SCREEN_H - PLAYER_HEIGHT):
             self.player_1.rect.y = SCREEN_H - PLAYER_HEIGHT
             self.player_1.speed_y = 0
+
+
+        
             
 
 
@@ -413,8 +459,10 @@ class Game():
             self.player_1.speed_y = 0
             self.player_1.rect.x = 10
             self.player_1.rect.y = 680
-            # self.num_lives = self.num_lives - 1
+            print(self.num_lives)
+            self.num_lives = self.num_lives - 1
 
+            print(self.num_lives)
 
 
         coin_hit_list = pygame.sprite.spritecollide(self.player_1, self.coins_group, True)
@@ -430,6 +478,8 @@ class Game():
             self.player_1.speed_y = 0
             self.player_1.rect.x = 10
             self.player_1.rect.y = 680
+
+        
         
         self.draw()
 
