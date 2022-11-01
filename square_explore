@@ -34,6 +34,7 @@ RED = (255,0,0)
 GREY = (150,150,150)
 
 font = pygame.font.SysFont(None, 25)
+l_c_m_font = pygame.font.SysFont(None, 50)
 
 
 #Icons for objects
@@ -88,8 +89,8 @@ h_enemy_location_list_x = [280]
 h_enemy_location_list_y = [450]
 
 #list of locations for vertical moving enemies
-v_enemy_location_list_x = []
-v_enemy_location_list_y = []
+v_enemy_location_list_x = [680]
+v_enemy_location_list_y = [20]
 
 #list of locations for coins
 coins_location_list_x = [85, 885, 325,   5, 445]
@@ -98,6 +99,8 @@ coins_location_list_y = [85, 565, 445, 365, 125]
 LIVES_NUM = 5
 
 COINS_NUM = 0
+
+
 
 
 
@@ -178,9 +181,9 @@ class Vertical_moving_enemies(Enemies):
     def update(self):
         for i in range(len(v_enemy_location_list_x)):
             if self.rect.y == (v_enemy_location_list_y[i]):
-                self.enemy_speed = 2
+                self.enemy_speed = 1
             if self.rect.y == (v_enemy_location_list_y[i] + 80):
-                self.enemy_speed = -2
+                self.enemy_speed = -1
 
         
         self.rect.y += self.enemy_speed
@@ -268,6 +271,12 @@ class Game():
 
         #set game value
         self.game_val = str(1)
+
+        self.level_complete = False
+
+        self.isJump = False
+        self.jumpCount = 8
+        self.vel = 5
 
         #Manages how fast screen refreshes
         self.clock = pygame.time.Clock()
@@ -391,6 +400,10 @@ class Game():
         coin_num = font.render(str(self.coin_num), True, WHITE)
         screen.blit(coin_num, (SCREEN_W/20,23))
         
+        self.level_complete_mesg = l_c_m_font.render("LEVEL COMPLETE", True, WHITE)
+        if self.level_complete == True:
+            for x in range(1,60):
+                screen.blit(self.level_complete_mesg, (SCREEN_W/3,340))
         #draw here
 
         #flip display to reveal new postion of objects (refreshes screen)
@@ -398,24 +411,59 @@ class Game():
         #clock ticks over
         self.clock.tick(60)
 
+
+
     def handle_event_and_collision(self):
-        keys = pygame.key.get_pressed()
        
         #player movement keys
         
-        if event.type == pygame.KEYDOWN:
+        keys = pygame.key.get_pressed()
+        #records left key presses
+        if keys[pygame.K_LEFT] and self.player_1.rect.x > self.vel: 
+            self.player_1.rect.x -= self.vel
+        #records right key presses
+        if keys[pygame.K_RIGHT] and self.player_1.rect.x < SCREEN_W - self.vel - PLAYER_HEIGHT:  
+            self.player_1.rect.x += self.vel
+        #the jumping loop
+        if not(self.isJump): #checks if attribute 'isJump' is false, making sure the player is not already jumping
+
+            if keys[pygame.K_DOWN] and self.player_1.rect.y < SCREEN_H - PLAYER_HEIGHT - self.vel:
+                self.player_1.rect.y += self.vel
+            #if the UP key is pressed, isJump is set to true, and the player begins the jump
+            if keys[pygame.K_UP]:
+                self.isJump = True
+        else: #where the jump happens
+            if self.jumpCount >= -8: #quadratic path
+                self.player_1.rect.y -= (self.jumpCount * abs(self.jumpCount)) * 0.25 #changing of the y coordinate of the player
+                self.jumpCount -= 0.5
+            else: 
+                self.jumpCount = 8
+                self.isJump = False # resets isJump to False so the player can't jump again
+        
+        
+        
+        
+        
+        # if event.type == pygame.KEYDOWN:
 
             
+        #     #records left and right key presses
+        #     if keys[pygame.K_LEFT]:
+        #         self.player_1.speed_x = -5
+        #     elif keys[pygame.K_RIGHT]:
+        #         self.player_1.speed_x = 5
+        #     #elif keys[pygame.K_UP]:
+        #      #       self.player_1.speed_y = -5
+        #     if not(self.isJump): 
+        #         if keys[pygame.K_UP]:
+        #             self.isJump = True
+        #             # self.player_1.speed_y = 2
+                    
+        #     else:
+        #         self.player_jump()
 
-            if keys[pygame.K_LEFT]:
-                self.player_1.speed_x = -5
-            elif keys[pygame.K_RIGHT]:
-                self.player_1.speed_x = 5
-            elif keys[pygame.K_UP]:
-                    self.player_1.speed_y = -5
-        elif event.type == pygame.KEYUP:
-                self.player_1.speed_y = 2
-                self.player_1.speed_x = 0
+        # elif event.type == pygame.KEYUP:
+        #     self.player_1.speed_x = 0    
 
                 
                                          
@@ -470,7 +518,7 @@ class Game():
             self.coin_num = self.coin_num + 1
             
         
-
+        
         flag_hit_list = pygame.sprite.spritecollide(self.player_1, self.finish_group, False)
         for collision in flag_hit_list:
             self.coin_num = self.coin_num + 5
@@ -478,6 +526,8 @@ class Game():
             self.player_1.speed_y = 0
             self.player_1.rect.x = 10
             self.player_1.rect.y = 680
+            self.level_complete = True
+
 
         
         
