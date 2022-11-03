@@ -272,7 +272,7 @@ class Game():
         #set game value
         self.game_val = str(1)
 
-        self.level_complete = False
+        self.level_complete = 0
 
         self.isJump = False
         self.jumpCount = 8
@@ -400,10 +400,10 @@ class Game():
         coin_num = font.render(str(self.coin_num), True, WHITE)
         screen.blit(coin_num, (SCREEN_W/20,23))
         
-        self.level_complete_mesg = l_c_m_font.render("LEVEL COMPLETE", True, WHITE)
-        if self.level_complete == True:
-            for x in range(1,60):
-                screen.blit(self.level_complete_mesg, (SCREEN_W/3,340))
+        self.level_complete_mesg = l_c_m_font.render("LEVEL COMPLETE", True, WHITE) #create level complete font
+        if self.level_complete > 0:
+            screen.blit(self.level_complete_mesg, (SCREEN_W/3,340)) #blits message onto screen
+            self.level_complete -= 1 #creates short time for it to be shown
         #draw here
 
         #flip display to reveal new postion of objects (refreshes screen)
@@ -418,6 +418,8 @@ class Game():
         #player movement keys
         
         keys = pygame.key.get_pressed()
+        if event.type == pygame.KEYUP: 
+            self.player_1.speed_y = 4
         #records left key presses
         if keys[pygame.K_LEFT] and self.player_1.rect.x > self.vel: 
             self.player_1.rect.x -= self.vel
@@ -433,15 +435,15 @@ class Game():
             if keys[pygame.K_UP]:
                 self.isJump = True
         else: #where the jump happens
-            if self.jumpCount >= -8: #quadratic path
-                self.player_1.rect.y -= (self.jumpCount * abs(self.jumpCount)) * 0.25 #changing of the y coordinate of the player
+            if self.jumpCount >= -10: #quadratic path
+                self.player_1.rect.y -= (self.jumpCount * abs(self.jumpCount)) * 0.3 #changing of the y coordinate of the player
                 self.jumpCount -= 0.5
             else: 
                 self.jumpCount = 8
                 self.isJump = False # resets isJump to False so the player can't jump again
         
-        
-        
+            
+
         
         
         # if event.type == pygame.KEYDOWN:
@@ -466,14 +468,16 @@ class Game():
         #     self.player_1.speed_x = 0    
 
                 
-                                         
+        #checks player is within boundaries                                 
         if (self.player_1.rect.x >= 0) and (self.player_1.rect.x <= SCREEN_W - PLAYER_HEIGHT):
+            #adds speed value to coordinate
             self.player_1.rect.x += self.player_1.speed_x
         elif (self.player_1.rect.x < 0):
+            #else keeps player within boundaries
             self.player_1.rect.x = 0
         elif (self.player_1.rect.x > SCREEN_W - PLAYER_HEIGHT):
             self.player_1.rect.x = (SCREEN_W - PLAYER_HEIGHT)
-
+        #checks y boundaries
         if (self.player_1.rect.y <= SCREEN_H - PLAYER_HEIGHT):
             self.player_1.rect.y += self.player_1.speed_y
         elif (self.player_1.rect.y > SCREEN_H - PLAYER_HEIGHT):
@@ -490,43 +494,54 @@ class Game():
 
     def handle_collisions(self):
         #Game logic goes after this comment
+        #checks for collision player and wall
         wall_hit_list = pygame.sprite.spritecollide(self.player_1, self.wall_list, False)
         for collision in wall_hit_list:
+            #sets player speed to 0
             self.player_1.speed_x = 0
             self.player_1.speed_y = 0
             self.player_1.rect.x = self.player_1_old_x
             self.player_1.rect.y = self.player_1_old_y
-        
+        #resets player coordinates to last location
         self.player_1_old_x = self.player_1.rect.x
         self.player_1_old_y = self.player_1.rect.y
 
         
+        #checks collisions player and static and moving enemies
         s_enemy_hit_list = pygame.sprite.spritecollide(self.player_1, self.enemies_group, False)
         for collision in s_enemy_hit_list:
+            #sets player speed to 0
             self.player_1.speed_x = 0
             self.player_1.speed_y = 0
+            #resets coordinates to startic coordinate
             self.player_1.rect.x = 10
             self.player_1.rect.y = 680
             print(self.num_lives)
+            #takes away a life
             self.num_lives = self.num_lives - 1
 
             print(self.num_lives)
 
-
+        
+        #check collision player and coin
         coin_hit_list = pygame.sprite.spritecollide(self.player_1, self.coins_group, True)
         for collision in coin_hit_list:
+            #adds one to coin coint
             self.coin_num = self.coin_num + 1
             
         
-        
+        #check collision player and finish line
         flag_hit_list = pygame.sprite.spritecollide(self.player_1, self.finish_group, False)
         for collision in flag_hit_list:
+            #adds 5 to coin count
             self.coin_num = self.coin_num + 5
             self.player_1.speed_x = 0
             self.player_1.speed_y = 0
+            #resets player to start coordinates
             self.player_1.rect.x = 10
             self.player_1.rect.y = 680
-            self.level_complete = True
+            #sets the timer variable for displaying level complete message
+            self.level_complete = 500
 
 
         
