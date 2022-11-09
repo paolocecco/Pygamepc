@@ -1,7 +1,6 @@
 #imports python libraries
 import pygame
 import math
-import pygame_menu
 
 #Initialise PyGame
 
@@ -13,8 +12,6 @@ SCREEN_W = 960
 PLAYER_HEIGHT = 40
 size = (960,720)
 screen = pygame.display.set_mode(size)
-
-
 
 
 #Title of new window/screen
@@ -273,15 +270,13 @@ class Game():
     def __init__(self):
 
         #set game value
-        self.game_val = str(1)
+        self.game_val = str(0)
 
         self.level_complete = 0
 
         self.isJump = False
         self.jumpCount = 8
         self.vel = 5
-
-        
 
         #Manages how fast screen refreshes
         self.clock = pygame.time.Clock()
@@ -315,13 +310,20 @@ class Game():
         #create a list for the map walls
         self.wall_list = pygame.sprite.Group()
 
+        
         #create a list of all sprites
+        self.all_sprites_group_0 = pygame.sprite.Group()
+
         self.all_sprites_group = pygame.sprite.Group()
         
+        self.all_sprites_group_2 = pygame.sprite.Group()
+
         #create player 1
         self.player_1 = Player(BLUE, "Player 1")
         self.player_group.add(self.player_1)
-        self.all_sprites_group.add(self.player_1)        
+        self.all_sprites_group.add(self.player_1)
+        self.all_sprites_group_0.add(self.player_1)
+        self.all_sprites_group_2.add(self.player_1)       
         self.init_map()
 
         self.num_lives = LIVES_NUM
@@ -330,32 +332,36 @@ class Game():
 
 
         #create still enemies
-        for i in range(len(static_enemy_location_list_x)):
-            static_enemy = Enemies(RED, static_enemy_location_list_x[i], static_enemy_location_list_y[i])
-            #add enemies into sprite groups
-            self.enemies_group.add(static_enemy)
-            self.all_sprites_group.add(static_enemy)
+        if self.game_val == str(1):
+            for i in range(len(static_enemy_location_list_x)):
+                static_enemy = Enemies(RED, static_enemy_location_list_x[i], static_enemy_location_list_y[i])
+                #add enemies into sprite groups
+                self.enemies_group.add(static_enemy)
+                self.all_sprites_group.add(static_enemy)
 
 
         #create enemies which move vertically
-        for i in range(len(v_enemy_location_list_x)):
-            self.v_moving_enemy = Vertical_moving_enemies(GREY, v_enemy_location_list_x[i], v_enemy_location_list_y[i], 2, 550)
-            self.v_enemies_group.add(self.v_moving_enemy)
-            self.enemies_group.add(self.v_moving_enemy)
-            self.all_sprites_group.add(self.v_moving_enemy)
+        if self.game_val == str(1):
+            for i in range(len(v_enemy_location_list_x)):
+                self.v_moving_enemy = Vertical_moving_enemies(GREY, v_enemy_location_list_x[i], v_enemy_location_list_y[i], 2, 550)
+                self.v_enemies_group.add(self.v_moving_enemy)
+                self.enemies_group.add(self.v_moving_enemy)
+                self.all_sprites_group.add(self.v_moving_enemy)
 
         #create enemies which move horizontally
-        for i in range(len(h_enemy_location_list_x)):
-            self.h_moving_enemy = Horizontal_moving_enemies(GREY, h_enemy_location_list_x[i], h_enemy_location_list_y[i], 2, 550)
-            self.h_enemies_group.add(self.h_moving_enemy)
-            self.enemies_group.add(self.h_moving_enemy)
-            self.all_sprites_group.add(self.h_moving_enemy)
+        if self.game_val == str(1):
+            for i in range(len(h_enemy_location_list_x)):
+                self.h_moving_enemy = Horizontal_moving_enemies(GREY, h_enemy_location_list_x[i], h_enemy_location_list_y[i], 2, 550)
+                self.h_enemies_group.add(self.h_moving_enemy)
+                self.enemies_group.add(self.h_moving_enemy)
+                self.all_sprites_group.add(self.h_moving_enemy)
 
 
         #create finish flag object
-        finish = Finish_Flag(GOLD, 40, 80, 900, 40)
-        self.finish_group.add(finish)
-        self.all_sprites_group.add(finish)
+        if self.game_val == str(1):
+            finish = Finish_Flag(GOLD, 40, 80, 900, 40)
+            self.finish_group.add(finish)
+            self.all_sprites_group.add(finish)
 
         #create lives object
         
@@ -364,29 +370,34 @@ class Game():
                 heart = Lives(z, 5)
                 self.lives_list.add(heart)
                 self.all_sprites_group.add(heart)
+                self.all_sprites_group_0.add(heart)
+                self.all_sprites_group_2.add(heart)
 
         #create coin objects
-        for i in range(len(coins_location_list_x)):
-            coin = Coins(coins_location_list_x[i], coins_location_list_y[i])
-            self.coins_group.add(coin)
-            self.all_sprites_group.add(coin)
+        if self.game_val == str(1):
+            for i in range(len(coins_location_list_x)):
+                coin = Coins(coins_location_list_x[i], coins_location_list_y[i])
+                self.coins_group.add(coin)
+                self.all_sprites_group.add(coin)
 
         #create display of coin count
         coin_count = Coins_display(20, 20)
         self.coin_display_list.add(coin_count)
         self.all_sprites_group.add(coin_count)
+        self.all_sprites_group_0.add(coin_count)
+        self.all_sprites_group_2.add(coin_count)
 
 
 
     def init_map(self):
         #create map
-        
-        for y in range(18):
-            for x in range(24):
-                if map_1_list[y][x] == 1:
-                    my_wall = Maps(x*40, y*40)
-                    self.wall_list.add(my_wall)
-                    self.all_sprites_group.add(my_wall)
+        if self.game_val == str(1):
+            for y in range(18):
+                for x in range(24):
+                    if map_1_list[y][x] == 1:
+                        my_wall = Maps(x*40, y*40)
+                        self.wall_list.add(my_wall)
+                        self.all_sprites_group.add(my_wall)
 
 
     def logic(self):
@@ -396,12 +407,18 @@ class Game():
 
 
     def draw(self):
-        screen.fill (BLACK)
-        screen.blit(Background_level1, (0,0))
-        self.all_sprites_group.update()
+        screen.fill (BLACK)        
+
+        if self.game_val == str(0):
+            self.all_sprites_group_0.update()
+            self.all_sprites_group_0.draw(screen)
         if self.game_val == str(1):
-            #screen.blit(Background_level1,(0,0))
+            screen.blit(Background_level1, (0,0))
+            self.all_sprites_group.update()
             self.all_sprites_group.draw (screen)
+        if self.game_val == str(2):
+            self.all_sprites_group_2.update()
+            self.all_sprites_group_2.draw (screen)
 
         coin_num = font.render(str(self.coin_num), True, WHITE)
         screen.blit(coin_num, (SCREEN_W/20,23))
@@ -411,10 +428,6 @@ class Game():
             screen.blit(self.level_complete_mesg, (SCREEN_W/3,340)) #blits message onto screen
             self.level_complete -= 1 #creates short time for it to be shown
         #draw here
-
-        
-
-
 
         #flip display to reveal new postion of objects (refreshes screen)
         pygame.display.flip()
@@ -503,7 +516,7 @@ class Game():
         
 
     def handle_collisions(self):
-        #self.collision_types = {'top': False, 'bottom': False, 'right': False, 'left': False}
+        #Game logic goes after this comment
         #checks for collision player and wall
         wall_hit_list = pygame.sprite.spritecollide(self.player_1, self.wall_list, False)
         for collision in wall_hit_list:
@@ -560,24 +573,18 @@ class Game():
 
 
 
-    def run(self):
-        Game.__init__()
-        Game.init_map()
-        Game.logic()
-        Game.handle_event_and_collision()
-        Game.handle_collisions()
+    # def run(self):
+    #     self.__init__()
+    #     self.init_map()
+    #     self.logic()
+    #     self.handle_event_and_collision()
+    #     self.handle_collisions()
         
 
 
 ### GAME LOOP
 
 game = Game()
-
-
-# menu = pygame_menu.Menu('Welcome', 400, 300,
-#                        theme=pygame_menu.themes.THEME_BLUE)
-        
-# menu.add.button('Start', game.run())
 
 while not done:
 
@@ -596,7 +603,7 @@ while not done:
     game.handle_event_and_collision()
     game.handle_collisions()
 
-    #game.run()
+    # game.run()
     #screen background is BLACK
     # screen.fill (BLACK)
     
