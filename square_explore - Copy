@@ -35,6 +35,9 @@ GREY = (150,150,150)
 
 font = pygame.font.SysFont(None, 25)
 l_c_m_font = pygame.font.SysFont(None, 50)
+title_font = pygame.font.SysFont('malgungothic', 100)
+
+ms_game_title = title_font.render('SQUARE EXPLORE', True, BLUE)
 
 
 #Icons for objects
@@ -411,6 +414,7 @@ class Game():
 
         if self.game_val == str(0):
             self.all_sprites_group_0.update()
+            screen.blit(ms_game_title, (SCREEN_W/15, 300))
             self.all_sprites_group_0.draw(screen)
         if self.game_val == str(1):
             screen.blit(Background_level1, (0,0))
