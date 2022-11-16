@@ -315,8 +315,7 @@ class Finish_Flag(pygame.sprite.Sprite):
 class Game():
     def __init__(self):
 
-        #set game value
-        self.game_val = str(0)
+        self.game_val = str(1)
 
         self.level_complete = 0
 
@@ -373,7 +372,7 @@ class Game():
         self.all_sprites_group.add(self.player_1)
         self.all_sprites_group_0.add(self.player_1)
         self.all_sprites_group_2.add(self.player_1)       
-        self.init_map()
+        #self.init_map()
 
         self.num_lives = LIVES_NUM
 
@@ -441,6 +440,7 @@ class Game():
     def init_map(self):
         #create map
         #create splash screen map
+                    
         if self.game_val == str(0):
             for y in range(18):
                 for x in range(24):
@@ -471,8 +471,8 @@ class Game():
 
         if self.game_val == str(0):
             self.all_sprites_group_0.update()
-            screen.blit(ms_game_title, (SCREEN_W/15, 300))
             self.all_sprites_group_0.draw(screen)
+            screen.blit(ms_game_title, (SCREEN_W/15, 300))    
         if self.game_val == str(1):
             screen.blit(Background_level1, (0,0))
             self.all_sprites_group.update()
@@ -486,7 +486,7 @@ class Game():
         
         self.level_complete_mesg = l_c_m_font.render("LEVEL COMPLETE", True, WHITE) #create level complete font
         if self.level_complete > 0:
-            screen.blit(self.level_complete_mesg, (SCREEN_W/3,340)) #blits message onto screen
+            screen.blit(self.level_complete_mesg, (SCREEN_W/3,200)) #blits message onto screen
             self.level_complete -= 1 #creates short time for it to be shown
         #draw here
 
@@ -626,6 +626,7 @@ class Game():
             self.player_1.rect.y = 680
             #sets the timer variable for displaying level complete message
             self.level_complete = 500
+            self.game_val = str(0)
 
 
         #checks for collision player and level blocks
@@ -635,7 +636,7 @@ class Game():
             self.player_1.speed_x = 0
             self.player_1.speed_y = 0
             print(collision)
-
+            self.game_val = str(1)
         
         
         self.draw()
@@ -664,6 +665,8 @@ while not done:
         
         if event.type == pygame.QUIT:
             done = True
+
+    
         
     
     #Game logic goes after this comment

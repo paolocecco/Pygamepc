@@ -38,6 +38,9 @@ GREY = (150,150,150)
 
 font = pygame.font.SysFont(None, 25)
 l_c_m_font = pygame.font.SysFont(None, 50)
+title_font = pygame.font.SysFont('malgungothic', 100)
+
+ms_game_title = title_font.render('SQUARE EXPLORE', True, BLUE)
 
 
 #Icons for objects
@@ -63,6 +66,26 @@ Coin_icon_mini = pygame.image.load('coinicon.png').convert_alpha()
 Coin_icon_mini = pygame.transform.scale(Coin_icon, (20,20))
 
 #map list for blocks
+splash_screen_list =[[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0], # =24 columns, # = 18 rows
+            [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]]
+
+
 map_1_list=[[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0], # =24 columns, # = 18 rows
             [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
             [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
@@ -81,6 +104,27 @@ map_1_list=[[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0], # =24 columns, # 
             [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1],
             [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1],
             [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1]]
+
+
+map_2_list =[[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0], # =24 columns, # = 18 rows
+            [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]]
+
 
 
 #list of locations for static enemies
@@ -269,11 +313,163 @@ class Finish_Flag(pygame.sprite.Sprite):
         self.rect.x = x_ref
         self.rect.y = y_ref
 
+
+class Splash_Screen():
+    def __init__(self):
+
+        self.isJump = False
+        self.jumpCount = 8
+        self.vel = 5
+
+        
+
+        #Manages how fast screen refreshes
+        self.clock = pygame.time.Clock()
+
+        #create group of background images
+        self.background_group = pygame.sprite.Group()
+
+        #creates a group of player(s)
+        self.player_group = pygame.sprite.Group()
+
+        #create group of enemies
+        self.enemies_group = pygame.sprite.Group()
+
+        #create group of lives
+        self.lives_list = pygame.sprite.Group()
+
+        #create display of number of coins
+        self.coin_display_list = pygame.sprite.Group()
+
+        #create a list for the map walls
+        self.wall_list = pygame.sprite.Group()
+
+        #create a list of all sprites
+        self.all_sprites_group = pygame.sprite.Group()
+        
+        #create player 1
+        self.player_1 = Player(BLUE, "Player 1")
+        self.player_group.add(self.player_1)
+        self.all_sprites_group.add(self.player_1)        
+        self.init_map()
+
+        self.num_lives = LIVES_NUM
+
+        self.coin_num  = COINS_NUM
+        
+
+        #create lives object
+        
+        for x in range(self.num_lives):
+            for z in range(700, 730 +(x*30), 30):
+                heart = Lives(z, 5)
+                self.lives_list.add(heart)
+                self.all_sprites_group.add(heart)
+
+
+        #create display of coin count
+        coin_count = Coins_display(20, 20)
+        self.coin_display_list.add(coin_count)
+        self.all_sprites_group.add(coin_count)
+
+
+
+    def init_map(self):
+
+
+        #create map
+
+        for y in range(18):
+            for x in range(24):
+                if splash_screen_list[y][x] == 1:
+                    my_wall = Maps(x*40, y*40)
+                    self.wall_list.add(my_wall)
+                    self.all_sprites_group.add(my_wall)
+
+    def logic(self):
+        pass
+
+
+    def draw(self):
+
+        
+        screen.fill (BLACK)  
+        
+        self.all_sprites_group.update()
+        self.all_sprites_group.draw (screen)
+
+
+        #flip display to reveal new postion of objects (refreshes screen)
+        pygame.display.flip()
+        #clock ticks over
+        self.clock.tick(60)
+
+        coin_num = font.render(str(self.coin_num), True, WHITE)
+        screen.blit(coin_num, (SCREEN_W/20,23))
+
+    def handle_event(self):
+        #player movement keys
+        
+        keys = pygame.key.get_pressed()
+        # if event.type == pygame.KEYUP: 
+        #     self.player_1.speed_y = 4
+        #records left key presses
+        if keys[pygame.K_LEFT] and self.player_1.rect.x > self.vel: 
+            self.player_1.rect.x -= self.vel
+        #records right key presses
+        if keys[pygame.K_RIGHT] and self.player_1.rect.x < SCREEN_W - self.vel - PLAYER_HEIGHT:  
+            self.player_1.rect.x += self.vel
+        #the jumping loop
+        if not(self.isJump): #checks if attribute 'isJump' is false, making sure the player is not already jumping
+
+            if keys[pygame.K_DOWN] and self.player_1.rect.y < SCREEN_H - PLAYER_HEIGHT - self.vel:
+                self.player_1.rect.y += self.vel
+            #if the UP key is pressed, isJump is set to true, and the player begins the jump
+            if keys[pygame.K_UP]:
+                self.isJump = True
+        else: #where the jump happens
+            if self.jumpCount >= -10: #quadratic path
+                self.player_1.rect.y -= (self.jumpCount * abs(self.jumpCount)) * 0.3 #changing of the y coordinate of the player
+                self.jumpCount -= 0.5
+            else: 
+                self.jumpCount = 8
+                self.isJump = False # resets isJump to False so the player can't jump again
+
+
+        #checks player is within boundaries                                 
+        if (self.player_1.rect.x >= 0) and (self.player_1.rect.x <= SCREEN_W - PLAYER_HEIGHT):
+            #adds speed value to coordinate
+            self.player_1.rect.x += self.player_1.speed_x
+        elif (self.player_1.rect.x < 0):
+            #else keeps player within boundaries
+            self.player_1.rect.x = 0
+        elif (self.player_1.rect.x > SCREEN_W - PLAYER_HEIGHT):
+            self.player_1.rect.x = (SCREEN_W - PLAYER_HEIGHT)
+        #checks y boundaries
+        if (self.player_1.rect.y <= SCREEN_H - PLAYER_HEIGHT):
+            self.player_1.rect.y += self.player_1.speed_y
+        elif (self.player_1.rect.y > SCREEN_H - PLAYER_HEIGHT):
+            self.player_1.rect.y = SCREEN_H - PLAYER_HEIGHT
+            self.player_1.speed_y = 0
+
+
+    def handle_collisions(self):
+        #checks for collision player and wall
+        wall_hit_list = pygame.sprite.spritecollide(self.player_1, self.wall_list, False)
+        for collision in wall_hit_list:
+            #sets player speed to 0
+            self.player_1.speed_x = 0
+            self.player_1.speed_y = 0
+            self.player_1.rect.x = self.player_1_old_x
+            self.player_1.rect.y = self.player_1_old_y
+        #resets player coordinates to last location
+        self.player_1_old_x = self.player_1.rect.x
+        self.player_1_old_y = self.player_1.rect.y
+
+
 class Game():
     def __init__(self):
 
-        #set game value
-        self.game_val = str(1)
 
         self.level_complete = 0
 
@@ -380,7 +576,7 @@ class Game():
 
     def init_map(self):
         #create map
-        
+
         for y in range(18):
             for x in range(24):
                 if map_1_list[y][x] == 1:
@@ -396,11 +592,11 @@ class Game():
 
 
     def draw(self):
-        screen.fill (BLACK)
-        screen.blit(Background_level1, (0,0))
-        self.all_sprites_group.update()
+        screen.fill (BLACK)        
+    
         if self.game_val == str(1):
-            #screen.blit(Background_level1,(0,0))
+            screen.blit(Background_level1, (0,0))
+            self.all_sprites_group.update()
             self.all_sprites_group.draw (screen)
 
         coin_num = font.render(str(self.coin_num), True, WHITE)
@@ -423,7 +619,7 @@ class Game():
 
 
 
-    def handle_event_and_collision(self):
+    def handle_event(self):
        
         #player movement keys
         
@@ -560,18 +756,12 @@ class Game():
 
 
 
-    def run(self):
-        Game.__init__()
-        Game.init_map()
-        Game.logic()
-        Game.handle_event_and_collision()
-        Game.handle_collisions()
-        
 
+screen_change = 'No'
 
 ### GAME LOOP
 
-game = Game()
+game = Splash_Screen()
 
 
 # menu = pygame_menu.Menu('Welcome', 400, 300,
@@ -582,7 +772,19 @@ game = Game()
 while not done:
 
     #user input and controls
-  
+    game.draw()
+    game.logic()
+    game.handle_event()
+    game.handle_collisions()
+    if screen_change != 'No':
+        if screen_change == 'lvl1':
+            game = Game()
+        elif screen_change == 'splashscreen':
+            game = Splash_Screen
+        screen_change = 'No'
+        
+        
+
     for event in pygame.event.get():
         
         
@@ -591,10 +793,7 @@ while not done:
         
     
     #Game logic goes after this comment
-    game.draw()
-    game.logic()
-    game.handle_event_and_collision()
-    game.handle_collisions()
+    
 
     #game.run()
     #screen background is BLACK
