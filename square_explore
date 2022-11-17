@@ -314,6 +314,8 @@ class Finish_Flag(pygame.sprite.Sprite):
         self.rect.y = y_ref
 
 
+
+#class for splash screen
 class Splash_Screen():
     def __init__(self):
 
@@ -397,22 +399,28 @@ class Splash_Screen():
         
         self.all_sprites_group.update()
         self.all_sprites_group.draw (screen)
+        screen.blit(ms_game_title, (SCREEN_W/15, 300)) 
 
+        coin_num = font.render(str(self.coin_num), True, WHITE)
+        screen.blit(coin_num, (SCREEN_W/20,23))
 
         #flip display to reveal new postion of objects (refreshes screen)
         pygame.display.flip()
         #clock ticks over
         self.clock.tick(60)
 
-        coin_num = font.render(str(self.coin_num), True, WHITE)
-        screen.blit(coin_num, (SCREEN_W/20,23))
+        
 
     def handle_event(self):
         #player movement keys
         
         keys = pygame.key.get_pressed()
-        # if event.type == pygame.KEYUP: 
-        #     self.player_1.speed_y = 4
+
+
+        # for event in pygame.event.get():
+        #     if event.type == pygame.KEYUP: 
+        #         self.player_1.speed_y = 5
+
         #records left key presses
         if keys[pygame.K_LEFT] and self.player_1.rect.x > self.vel: 
             self.player_1.rect.x -= self.vel
@@ -429,11 +437,15 @@ class Splash_Screen():
                 self.isJump = True
         else: #where the jump happens
             if self.jumpCount >= -10: #quadratic path
-                self.player_1.rect.y -= (self.jumpCount * abs(self.jumpCount)) * 0.3 #changing of the y coordinate of the player
-                self.jumpCount -= 0.5
+                self.player_1.rect.y -= (self.jumpCount * abs(self.jumpCount)) * 0.4 #changing of the y coordinate of the player
+                self.jumpCount -= 0.2
             else: 
                 self.jumpCount = 8
                 self.isJump = False # resets isJump to False so the player can't jump again
+
+        self.player_1.speed_y += 0.75
+        if self.player_1.rect.y > SCREEN_H and self.player_1.speed_y >= 0:
+            self.player_1.speed_y = 0
 
 
         #checks player is within boundaries                                 
@@ -453,18 +465,23 @@ class Splash_Screen():
             self.player_1.speed_y = 0
 
 
+
+
     def handle_collisions(self):
         #checks for collision player and wall
         wall_hit_list = pygame.sprite.spritecollide(self.player_1, self.wall_list, False)
         for collision in wall_hit_list:
             #sets player speed to 0
-            self.player_1.speed_x = 0
+            #self.player_1.speed_x = 0
             self.player_1.speed_y = 0
             self.player_1.rect.x = self.player_1_old_x
             self.player_1.rect.y = self.player_1_old_y
+            
+            screen_change = 'lvl1'
         #resets player coordinates to last location
         self.player_1_old_x = self.player_1.rect.x
         self.player_1_old_y = self.player_1.rect.y
+        
 
 
 class Game():
@@ -594,10 +611,9 @@ class Game():
     def draw(self):
         screen.fill (BLACK)        
     
-        if self.game_val == str(1):
-            screen.blit(Background_level1, (0,0))
-            self.all_sprites_group.update()
-            self.all_sprites_group.draw (screen)
+        screen.blit(Background_level1, (0,0))
+        self.all_sprites_group.update()
+        self.all_sprites_group.draw (screen)
 
         coin_num = font.render(str(self.coin_num), True, WHITE)
         screen.blit(coin_num, (SCREEN_W/20,23))
@@ -624,8 +640,12 @@ class Game():
         #player movement keys
         
         keys = pygame.key.get_pressed()
-        if event.type == pygame.KEYUP: 
-            self.player_1.speed_y = 4
+
+
+        # for event in pygame.event.get():
+        #     if event.type == pygame.KEYUP: 
+        #         self.player_1.speed_y = 5
+
         #records left key presses
         if keys[pygame.K_LEFT] and self.player_1.rect.x > self.vel: 
             self.player_1.rect.x -= self.vel
@@ -643,12 +663,15 @@ class Game():
         else: #where the jump happens
             if self.jumpCount >= -10: #quadratic path
                 self.player_1.rect.y -= (self.jumpCount * abs(self.jumpCount)) * 0.3 #changing of the y coordinate of the player
-                self.jumpCount -= 0.5
+                self.jumpCount -= 0.2
             else: 
                 self.jumpCount = 8
                 self.isJump = False # resets isJump to False so the player can't jump again
+
         
-            
+        self.player_1.speed_y += 2
+        if self.player_1.rect.y > SCREEN_H and self.player_1.speed_y >= 0:
+            self.player_1.speed_y = 0   
 
         
         
@@ -748,6 +771,7 @@ class Game():
             self.player_1.rect.y = 680
             #sets the timer variable for displaying level complete message
             self.level_complete = 500
+            screen_change = 'splashscreen'
 
 
         
@@ -791,6 +815,9 @@ while not done:
         if event.type == pygame.QUIT:
             done = True
         
+       
+
+        
     
     #Game logic goes after this comment
     
@@ -798,10 +825,7 @@ while not done:
     #game.run()
     #screen background is BLACK
     # screen.fill (BLACK)
-    
-    # all_sprites_group.update()
-    # #screen.blit(Background_level1,(0,0))
-    # all_sprites_group.draw (screen)
+
        
     # #draw here
 
