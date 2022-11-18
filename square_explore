@@ -195,6 +195,12 @@ class Player(pygame.sprite.Sprite):
     def set_speed(self, newspeed):
         Player.speed = newspeed
 
+    # def move(self, isJump, jumpCount, vel):
+    #     Player.jumping = isJump
+    #     Player.jumpval = jumpCount
+    #     Player.velocity = vel
+        
+
 
 
 #create static enemy class
@@ -319,6 +325,9 @@ class Finish_Flag(pygame.sprite.Sprite):
 class Splash_Screen():
     def __init__(self):
 
+        pass
+    def logic(self):
+        
         self.isJump = False
         self.jumpCount = 8
         self.vel = 5
@@ -353,7 +362,6 @@ class Splash_Screen():
         self.player_1 = Player(BLUE, "Player 1")
         self.player_group.add(self.player_1)
         self.all_sprites_group.add(self.player_1)        
-        self.init_map()
 
         self.num_lives = LIVES_NUM
 
@@ -376,7 +384,7 @@ class Splash_Screen():
 
 
 
-    def init_map(self):
+    # def init_map(self):
 
 
         #create map
@@ -388,11 +396,10 @@ class Splash_Screen():
                     self.wall_list.add(my_wall)
                     self.all_sprites_group.add(my_wall)
 
-    def logic(self):
-        pass
+    
 
 
-    def draw(self):
+    # def draw(self):
 
         
         screen.fill (BLACK)  
@@ -411,7 +418,7 @@ class Splash_Screen():
 
         
 
-    def handle_event(self):
+    # def handle_event(self):
         #player movement keys
         
         keys = pygame.key.get_pressed()
@@ -467,7 +474,7 @@ class Splash_Screen():
 
 
 
-    def handle_collisions(self):
+    # def handle_collisions(self):
         #checks for collision player and wall
         wall_hit_list = pygame.sprite.spritecollide(self.player_1, self.wall_list, False)
         for collision in wall_hit_list:
@@ -484,9 +491,13 @@ class Splash_Screen():
         
 
 
+
+#level 1 class
 class Game():
     def __init__(self):
+        pass
 
+    def logic(self):
 
         self.level_complete = 0
 
@@ -535,7 +546,6 @@ class Game():
         self.player_1 = Player(BLUE, "Player 1")
         self.player_group.add(self.player_1)
         self.all_sprites_group.add(self.player_1)        
-        self.init_map()
 
         self.num_lives = LIVES_NUM
 
@@ -591,7 +601,7 @@ class Game():
 
 
 
-    def init_map(self):
+    # def init_map(self):
         #create map
 
         for y in range(18):
@@ -600,15 +610,10 @@ class Game():
                     my_wall = Maps(x*40, y*40)
                     self.wall_list.add(my_wall)
                     self.all_sprites_group.add(my_wall)
-
-
-    def logic(self):
-
-        pass
         
 
 
-    def draw(self):
+    # def draw(self):
         screen.fill (BLACK)        
     
         screen.blit(Background_level1, (0,0))
@@ -635,7 +640,7 @@ class Game():
 
 
 
-    def handle_event(self):
+    # def handle_event(self):
        
         #player movement keys
         
@@ -661,40 +666,17 @@ class Game():
             if keys[pygame.K_UP]:
                 self.isJump = True
         else: #where the jump happens
-            if self.jumpCount >= -10: #quadratic path
-                self.player_1.rect.y -= (self.jumpCount * abs(self.jumpCount)) * 0.3 #changing of the y coordinate of the player
-                self.jumpCount -= 0.2
+            if self.jumpCount >= -8: #quadratic path
+                self.player_1.rect.y -= (self.jumpCount * abs(self.jumpCount)) * 0.5 #changing of the y coordinate of the player
+                self.jumpCount -= 0.4
             else: 
-                self.jumpCount = 8
+                self.jumpCount = 6
                 self.isJump = False # resets isJump to False so the player can't jump again
 
-        
-        self.player_1.speed_y += 2
-        if self.player_1.rect.y > SCREEN_H and self.player_1.speed_y >= 0:
-            self.player_1.speed_y = 0   
-
-        
-        
-        # if event.type == pygame.KEYDOWN:
-
-            
-        #     #records left and right key presses
-        #     if keys[pygame.K_LEFT]:
-        #         self.player_1.speed_x = -5
-        #     elif keys[pygame.K_RIGHT]:
-        #         self.player_1.speed_x = 5
-        #     #elif keys[pygame.K_UP]:
-        #      #       self.player_1.speed_y = -5
-        #     if not(self.isJump): 
-        #         if keys[pygame.K_UP]:
-        #             self.isJump = True
-        #             # self.player_1.speed_y = 2
-                    
-        #     else:
-        #         self.player_jump()
-
-        # elif event.type == pygame.KEYUP:
-        #     self.player_1.speed_x = 0    
+        # self.player_1.speed_y += 0.75
+        # if self.player_1.rect.y > SCREEN_H and self.player_1.speed_y >= 0:
+        #     self.player_1.speed_y = 0
+ 
 
                 
         #checks player is within boundaries                                 
@@ -721,7 +703,7 @@ class Game():
 
         
 
-    def handle_collisions(self):
+    # def handle_collisions(self):
         #self.collision_types = {'top': False, 'bottom': False, 'right': False, 'left': False}
         #checks for collision player and wall
         wall_hit_list = pygame.sprite.spritecollide(self.player_1, self.wall_list, False)
@@ -771,12 +753,13 @@ class Game():
             self.player_1.rect.y = 680
             #sets the timer variable for displaying level complete message
             self.level_complete = 500
+            global screen_change 
             screen_change = 'splashscreen'
 
 
         
         
-        self.draw()
+        
 
 
 
@@ -796,10 +779,10 @@ game = Splash_Screen()
 while not done:
 
     #user input and controls
-    game.draw()
+    #game.draw()
     game.logic()
-    game.handle_event()
-    game.handle_collisions()
+    # game.handle_event()
+    # game.handle_collisions()
     if screen_change != 'No':
         if screen_change == 'lvl1':
             game = Game()
