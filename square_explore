@@ -581,7 +581,7 @@ class Game():
          
 
 
-    # def init_map(self):
+    #  init_map
         #create map
 
         for y in range(18):
@@ -595,11 +595,7 @@ class Game():
     def logic(self):
         global screen_change
 
-       
-        
-
-
-    # def draw(self):
+    #  drawing and updating sprites
         screen.fill (BLACK)        
         self.clock.tick(60)
         screen.blit(Background_level1, (0,0))
