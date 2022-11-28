@@ -48,12 +48,17 @@ l_c_m_font = pygame.font.SysFont(None, 50)
 title_font = pygame.font.SysFont('malgungothic', 100)
 
 lvl_txt_font = pygame.font.SysFont('malgungothic', 30)
+
+help_txt_font = pygame.font.SysFont('malgungothic', 12)
+
 #level titles splash screen creation
 lvl1_txt = lvl_txt_font.render('LEVEL 1', True, WHITE)
 lvl2_txt = lvl_txt_font.render('LEVEL 2', True, WHITE)
 lvl3_txt = lvl_txt_font.render('LEVEL 3', True, WHITE)
 
 skinsshop_txt = lvl_txt_font.render('SKINS', True, WHITE)
+
+help_txt = help_txt_font.render('press ^ arrow under level to start game', True, WHITE)
 
 
 ms_game_title = title_font.render('SQUARE EXPLORE', True, BLUE)
@@ -465,14 +470,7 @@ class Splash_Screen():
         keys = pygame.key.get_pressed()
 
 
-        #changing levels based on area on splash screen
-        if self.player_1.rect.x > 50 and self.player_1.rect.x < 300:
-            if keys[pygame.K_UP]:
-                screen_change = 'lvl1'
         
-        if self.player_1.rect.x > 300 and self.player_1.rect.x < 550:
-            if keys[pygame.K_UP]:
-                screen_change = 'lvl2'
 
 
 
@@ -498,6 +496,28 @@ class Splash_Screen():
         screen.blit(skinsshop_txt, (835, 80))
 
 
+        #changing levels based on area on splash screen
+        if self.player_1.rect.x > 50 and self.player_1.rect.x < 300:
+            #blits help message in the level area if within the area
+            screen.blit(help_txt, (65, 40))
+            if keys[pygame.K_UP]:
+                screen_change = 'lvl1'
+                
+        
+        if self.player_1.rect.x > 300 and self.player_1.rect.x < 550:
+            #blits help message in the level area if within the area
+            screen.blit(help_txt, (315, 40))
+            if keys[pygame.K_UP]:
+                screen_change = 'lvl2'
+
+        if self.player_1.rect.x > 550 and self.player_1.rect.x < 800:
+            #blits help message in the level area if within the area
+            screen.blit(help_txt, (565, 40))
+            if keys[pygame.K_UP]:
+                screen_change = 'lvl3'
+
+        
+
         #updates moving sprites
         self.all_sprites_group.update()
         self.all_sprites_group.draw (screen)
@@ -514,7 +534,11 @@ class Splash_Screen():
 
         #flip display to reveal new postion of objects (refreshes screen)
         pygame.display.flip()
-        #clock ticks over
+        
+
+
+        
+                
 
 
 
