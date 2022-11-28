@@ -48,6 +48,7 @@ l_c_m_font = pygame.font.SysFont(None, 50)
 title_font = pygame.font.SysFont('malgungothic', 100)
 
 lvl_txt_font = pygame.font.SysFont('malgungothic', 30)
+lvl_title_font = pygame.font.SysFont('malgungothic', 30, bold=True)
 
 help_txt_font = pygame.font.SysFont('malgungothic', 12)
 
@@ -58,10 +59,16 @@ lvl3_txt = lvl_txt_font.render('LEVEL 3', True, WHITE)
 
 skinsshop_txt = lvl_txt_font.render('SKINS', True, WHITE)
 
+#tutorial texts
 help_txt = help_txt_font.render('press ^ arrow under level to start game', True, WHITE)
 
-
+#screen title texts
 ms_game_title = title_font.render('SQUARE EXPLORE', True, BLUE)
+
+lvl1_title = lvl_title_font.render('LEVEL 1', True, BLUE)
+lvl2_title = lvl_title_font.render('LEVEL 2', True, BLUE)
+lvl3_title = lvl_title_font.render('LEVEL 3', True, BLUE)
+
 
 
 #Icons for objects
@@ -690,6 +697,9 @@ class Game():
         screen.fill (BLACK)        
         self.clock.tick(60)
         screen.blit(Background_level1, (0,0))
+
+        screen.blit(lvl1_title, (420, 30))
+
         self.all_sprites_group.update()
         self.all_sprites_group.draw (screen)
 
