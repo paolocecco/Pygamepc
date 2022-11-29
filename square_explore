@@ -45,7 +45,7 @@ blue_w_border = pygame.transform.scale(blue_w_border, (40,40))
 
 font = pygame.font.SysFont(None, 25)
 l_c_m_font = pygame.font.SysFont(None, 50)
-title_font = pygame.font.SysFont('malgungothic', 100)
+title_font = pygame.font.SysFont('malgungothic', 100, bold = True)
 
 lvl_txt_font = pygame.font.SysFont('malgungothic', 30)
 lvl_title_font = pygame.font.SysFont('malgungothic', 30, bold=True)
@@ -149,23 +149,23 @@ map_1_list=[[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0], # =24 columns, # 
 
 
 map_2_list =[[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0], # =24 columns, # = 18 rows
-            [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-            [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-            [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-            [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-            [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-            [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-            [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-            [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-            [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-            [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-            [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-            [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-            [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-            [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-            [0,0,0,0,1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1,0,0,0,0],
-            [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-            [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]]
+            [0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0],
+            [0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,1,1,1,1],
+            [1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,1,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0],
+            [0,0,0,1,1,1,0,0,0,0,0,0,0,1,1,0,0,1,1,1,1,1,0,0],
+            [1,0,0,1,0,1,1,1,0,0,0,1,1,1,1,0,0,0,0,1,0,0,0,0],
+            [0,0,0,1,0,0,0,1,1,1,1,1,1,1,1,0,0,0,0,1,0,0,0,1],
+            [0,0,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0],
+            [0,0,0,1,0,0,0,0,1,1,0,0,0,1,1,0,0,0,0,1,1,0,0,0],
+            [1,0,0,1,0,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,1],
+            [0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            [1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1],
+            [0,0,0,0,0,0,0,1,0,0,0,1,1,1,0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,1,1,1,0,0,0,1,1,1,0,0,0,0,0,0,0,0,0,0]]
 
 
 
@@ -173,13 +173,25 @@ map_2_list =[[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0], # =24 columns, #
 static_enemy_location_list_x = [520, 560, 520, 560, 920, 920, 360]
 static_enemy_location_list_y = [560, 560, 480, 480, 560, 520, 120]
 
+s_enemy_location_list_x_2 = [320, 360, 400, 560, 600, 920, 920, 720, 320, 360, 400, 160, 400, 640]
+s_enemy_location_list_y_2 = [680, 680, 680, 680, 680, 560, 540, 240, 320, 320, 320, 000, 000, 000]
+
+
 #list of locations for horizontal moving enemies
 h_enemy_location_list_x = [280]
 h_enemy_location_list_y = [450]
 
+h_enemy_location_list_x_2 = [740]
+h_enemy_location_list_y_2 = [690]
+
+
 #list of locations for vertical moving enemies
 v_enemy_location_list_x = [680]
 v_enemy_location_list_y = [20]
+
+v_enemy_location_list_x_2 =[]
+v_enemy_location_list_y_2 =[]
+
 
 #list of locations for coins
 coins_location_list_x = [85, 885, 325,   5, 445]
@@ -842,23 +854,23 @@ class Game_2():
 
 
         #create still enemies
-        for i in range(len(static_enemy_location_list_x)):
-            static_enemy = Enemies(RED, static_enemy_location_list_x[i], static_enemy_location_list_y[i])
+        for i in range(len(s_enemy_location_list_x_2)):
+            static_enemy = Enemies(RED, s_enemy_location_list_x_2[i], s_enemy_location_list_y_2[i])
             #add enemies into sprite groups
             self.enemies_group.add(static_enemy)
             self.all_sprites_group.add(static_enemy)
 
 
         #create enemies which move vertically
-        for i in range(len(v_enemy_location_list_x)):
-            self.v_moving_enemy = Vertical_moving_enemies(GREY, v_enemy_location_list_x[i], v_enemy_location_list_y[i], 2, 550)
+        for i in range(len(v_enemy_location_list_x_2)):
+            self.v_moving_enemy = Vertical_moving_enemies(GREY, v_enemy_location_list_x_2[i], v_enemy_location_list_y_2[i], 2, 550)
             self.v_enemies_group.add(self.v_moving_enemy)
             self.enemies_group.add(self.v_moving_enemy)
             self.all_sprites_group.add(self.v_moving_enemy)
 
         #create enemies which move horizontally
-        for i in range(len(h_enemy_location_list_x)):
-            self.h_moving_enemy = Horizontal_moving_enemies(GREY, h_enemy_location_list_x[i], h_enemy_location_list_y[i], 2, 550)
+        for i in range(len(h_enemy_location_list_x_2)):
+            self.h_moving_enemy = Horizontal_moving_enemies(GREY, h_enemy_location_list_x_2[i], h_enemy_location_list_y_2[i], 2, 550)
             self.h_enemies_group.add(self.h_moving_enemy)
             self.enemies_group.add(self.h_moving_enemy)
             self.all_sprites_group.add(self.h_moving_enemy)
@@ -896,7 +908,7 @@ class Game_2():
 
         for y in range(18):
             for x in range(24):
-                if map_1_list[y][x] == 1:
+                if map_2_list[y][x] == 1:
                     my_wall = Maps(x*40, y*40)
                     self.wall_list.add(my_wall)
                     self.all_sprites_group.add(my_wall)
