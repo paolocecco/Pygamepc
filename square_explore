@@ -40,17 +40,22 @@ GREY = (150,150,150)
 blue_w_border = pygame.image.load('blue_w_border.png').convert_alpha()
 blue_w_border = pygame.transform.scale(blue_w_border, (40,40))
 
+kanyewest_skin = pygame.image.load('kanyewest_skin.png').convert_alpha()
+kanyewest_skin = pygame.transform.scale(kanyewest_skin, (40,40))
 
 
 
+#text fonts
 font = pygame.font.SysFont(None, 25)
 l_c_m_font = pygame.font.SysFont(None, 50)
 title_font = pygame.font.SysFont('malgungothic', 100, bold = True)
 
 lvl_txt_font = pygame.font.SysFont('malgungothic', 30)
-lvl_title_font = pygame.font.SysFont('malgungothic', 30, bold=True)
+lvl_title_font = pygame.font.SysFont('malgungothic', 30, bold = True)
 
-help_txt_font = pygame.font.SysFont('malgungothic', 12)
+help_txt_font = pygame.font.SysFont('malgungothic', 12, bold = True)
+help_txt_font_L = pygame.font.SysFont('malgungothic', 20, bold = True)
+
 
 #level titles splash screen creation
 lvl1_txt = lvl_txt_font.render('LEVEL 1', True, WHITE)
@@ -60,7 +65,12 @@ lvl3_txt = lvl_txt_font.render('LEVEL 3', True, WHITE)
 skinsshop_txt = lvl_txt_font.render('SKINS', True, WHITE)
 
 #tutorial texts
-help_txt = help_txt_font.render('press ^ arrow under level to start game', True, WHITE)
+help_txt = help_txt_font.render('jump to start', True, WHITE)
+help_txt_skins = help_txt_font.render('jump for', True, WHITE)
+
+tutorial_txt = help_txt_font_L.render('use arrow keys to move side to side and jump', True, WHITE)
+
+exit_txt = help_txt_font.render('press 0 to return to home screen', True, WHITE)
 
 #screen title texts
 ms_game_title = title_font.render('SQUARE EXPLORE', True, BLUE)
@@ -84,8 +94,13 @@ Enemy_icon = pygame.transform.scale(Enemy_icon, (20,20))
 Block_texture_level1 = pygame.image.load('blocktexturelevel1.png').convert_alpha()
 Block_texture_level1 = pygame.transform.scale(Block_texture_level1, (40,40))
 
+
 Background_level1 = pygame.image.load('backgroundimageL1.jpg').convert_alpha()
 Background_level1 = pygame.transform.scale(Background_level1, (960,720))
+
+Background_level2 = pygame.image.load('backgroundimageL2.jpg').convert_alpha()
+Background_level2 = pygame.transform.scale(Background_level2, (960,720))
+
 
 Coin_icon = pygame.image.load('coinicon.png').convert_alpha()
 Coin_icon = pygame.transform.scale(Coin_icon, (30,30))
@@ -155,14 +170,14 @@ map_2_list =[[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0], # =24 columns, #
             [1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,1,0,0,0,0,0,0,0],
             [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0],
             [0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0],
-            [0,0,0,1,1,1,0,0,0,0,0,0,0,1,1,0,0,1,1,1,1,1,0,0],
+            [0,0,0,1,1,1,0,0,0,1,0,0,0,1,1,0,0,1,1,1,1,1,0,0],
             [1,0,0,1,0,1,1,1,0,0,0,1,1,1,1,0,0,0,0,1,0,0,0,0],
-            [0,0,0,1,0,0,0,1,1,1,1,1,1,1,1,0,0,0,0,1,0,0,0,1],
+            [0,0,0,1,0,0,0,1,1,1,1,1,1,1,0,0,0,0,0,1,0,0,0,1],
             [0,0,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0],
             [0,0,0,1,0,0,0,0,1,1,0,0,0,1,1,0,0,0,0,1,1,0,0,0],
             [1,0,0,1,0,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,1],
             [0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-            [1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            [0,0,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
             [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1],
             [0,0,0,0,0,0,0,1,0,0,0,1,1,1,0,0,0,0,0,0,0,0,0,0],
             [0,0,0,0,0,1,1,1,0,0,0,1,1,1,0,0,0,0,0,0,0,0,0,0]]
@@ -174,28 +189,32 @@ static_enemy_location_list_x = [520, 560, 520, 560, 920, 920, 360]
 static_enemy_location_list_y = [560, 560, 480, 480, 560, 520, 120]
 
 s_enemy_location_list_x_2 = [320, 360, 400, 560, 600, 920, 920, 720, 320, 360, 400, 160, 400, 640]
-s_enemy_location_list_y_2 = [680, 680, 680, 680, 680, 560, 540, 240, 320, 320, 320, 000, 000, 000]
+s_enemy_location_list_y_2 = [680, 680, 680, 680, 680, 560, 520, 240, 320, 320, 320, 000, 000, 000]
 
 
 #list of locations for horizontal moving enemies
-h_enemy_location_list_x = [280]
-h_enemy_location_list_y = [450]
+h_enemy_location_list_x = [280,   750]
+h_enemy_location_list_y = [450,   690]
 
-h_enemy_location_list_x_2 = [740]
-h_enemy_location_list_y_2 = [690]
+# h_enemy_location_list_x_2 = [740]
+# h_enemy_location_list_y_2 = [690]
 
 
 #list of locations for vertical moving enemies
-v_enemy_location_list_x = [680]
-v_enemy_location_list_y = [20]
+v_enemy_location_list_x = [680,   10, 940]
+v_enemy_location_list_y = [20,    20, 200]
 
-v_enemy_location_list_x_2 =[]
-v_enemy_location_list_y_2 =[]
+# v_enemy_location_list_x_2 =[10]
+# v_enemy_location_list_y_2 =[20]
 
 
 #list of locations for coins
 coins_location_list_x = [85, 885, 325,   5, 445]
 coins_location_list_y = [85, 565, 445, 365, 125]
+
+coins_location_list_x_2 = [165, 925,   5, 285, 885, 325]
+coins_location_list_y_2 = [325, 685, 365, 205, 165, 645]
+
 
 LIVES_NUM = 5
 
@@ -244,10 +263,10 @@ class Player(pygame.sprite.Sprite):
 
         keys = pygame.key.get_pressed()
 
-
-        self.speed_y += 0.75
-        if self.rect.y > SCREEN_H and self.speed_y >= 0:
-            self.speed_y = 0
+        if self.speed_y <= 6:    
+            self.speed_y += 0.75
+            if self.rect.y > SCREEN_H and self.speed_y >= 0:
+                self.speed_y = 0
 
 
         if keys[pygame.K_1]:
@@ -291,6 +310,8 @@ class Player(pygame.sprite.Sprite):
         elif (self.rect.y > SCREEN_H - PLAYER_HEIGHT):
             self.rect.y = SCREEN_H - PLAYER_HEIGHT
             self.speed_y = 0
+
+            #stop hitting da wall
         
 
 
@@ -325,9 +346,9 @@ class Vertical_moving_enemies(Enemies):
 
     def update(self):
         for i in range(len(v_enemy_location_list_x)):
-            if self.rect.y == (v_enemy_location_list_y[i]):
+            if self.rect.y == (self.original_y):
                 self.enemy_speed = 1
-            if self.rect.y == (v_enemy_location_list_y[i] + 80):
+            if self.rect.y == (self.original_y + 80):
                 self.enemy_speed = -1
 
         
@@ -349,10 +370,12 @@ class Horizontal_moving_enemies(Enemies):
         self.speed_x = 0
 
     def update(self):
+        # global game
+        # if game = Game()
         for i in range(len(h_enemy_location_list_x)):
-            if self.rect.x == (h_enemy_location_list_y[i] - 220):
+            if self.rect.x == (self.original_x - 20):
                 self.enemy_speed = 1
-            if self.rect.x == (h_enemy_location_list_y[i] - 120):
+            if self.rect.x == (self.original_x + 60):
                 self.enemy_speed = -1
 
         
@@ -507,33 +530,63 @@ class Splash_Screen():
         screen.blit(s_s_lvl3g, (550,0))
         screen.blit(s_s_skinsg, (800,0))
 
-        #level number blitting
-        screen.blit(lvl1_txt, (125, 80))
-        screen.blit(lvl2_txt, (375, 80))
-        screen.blit(lvl3_txt, (625, 80))
+        
 
         screen.blit(skinsshop_txt, (835, 80))
 
 
-        #changing levels based on area on splash screen
-        if self.player_1.rect.x > 50 and self.player_1.rect.x < 300:
+
+        if self.player_1.rect.x < 50:
             #blits help message in the level area if within the area
-            screen.blit(help_txt, (65, 40))
+            screen.blit(tutorial_txt, (68, 450))
+            #level number blitting
+            screen.blit(lvl1_txt, (125, 80))
+            screen.blit(lvl2_txt, (375, 80))
+            screen.blit(lvl3_txt, (625, 80))
+
+
+        #changing levels based on area on splash screen
+        if self.player_1.rect.x >= 50 and self.player_1.rect.x < 300:
+            #blits help message in the level area if within the area
+            screen.blit(help_txt, (80, 93))
+            #level number blitting
+            screen.blit(lvl1_txt, (170, 80))
+            screen.blit(lvl2_txt, (375, 80))
+            screen.blit(lvl3_txt, (625, 80))
             if keys[pygame.K_UP]:
                 screen_change = 'lvl1'
                 
         
-        if self.player_1.rect.x > 300 and self.player_1.rect.x < 550:
+        if self.player_1.rect.x >= 300 and self.player_1.rect.x < 550:
             #blits help message in the level area if within the area
-            screen.blit(help_txt, (315, 40))
+            screen.blit(help_txt, (330, 93))
+            #level number blitting
+            screen.blit(lvl1_txt, (125, 80))
+            screen.blit(lvl2_txt, (420, 80))
+            screen.blit(lvl3_txt, (625, 80))
             if keys[pygame.K_UP]:
                 screen_change = 'lvl2'
 
-        if self.player_1.rect.x > 550 and self.player_1.rect.x < 800:
+        if self.player_1.rect.x >= 550 and self.player_1.rect.x < 800:
             #blits help message in the level area if within the area
-            screen.blit(help_txt, (565, 40))
+            screen.blit(help_txt, (580, 93))
+            #level number blitting
+            screen.blit(lvl1_txt, (125, 80))
+            screen.blit(lvl2_txt, (375, 80))
+            screen.blit(lvl3_txt, (670, 80))
             if keys[pygame.K_UP]:
                 screen_change = 'lvl3'
+
+        if self.player_1.rect.x >= 800:
+            screen.blit(help_txt_skins, (850, 70))
+            #level number blitting
+            screen.blit(lvl1_txt, (125, 80))
+            screen.blit(lvl2_txt, (375, 80))
+            screen.blit(lvl3_txt, (625, 80))
+            if keys[pygame.K_UP]:
+                screen_change = 'skins'
+            
+
 
         
 
@@ -562,20 +615,6 @@ class Splash_Screen():
 
 
 
-    # def handle_collisions(self):
-        #checks for collision player and wall
-        # wall_hit_list = pygame.sprite.spritecollide(self.player_1, self.wall_list, False)
-        # for collision in wall_hit_list:
-        #     #sets player speed to 0
-        #     #self.player_1.speed_x = 0
-        #     self.player_1.speed_y = 0
-        #     self.player_1.rect.x = self.player_1_old_x
-        #     self.player_1.rect.y = self.player_1_old_y
-            
-        #     screen_change = 'lvl1'
-        # #resets player coordinates to last location
-        # self.player_1_old_x = self.player_1.rect.x
-        # self.player_1_old_y = self.player_1.rect.y
         
 
 
@@ -646,15 +685,15 @@ class Game():
 
 
         #create enemies which move vertically
-        for i in range(len(v_enemy_location_list_x)):
-            self.v_moving_enemy = Vertical_moving_enemies(GREY, v_enemy_location_list_x[i], v_enemy_location_list_y[i], 2, 550)
+        for i in range(1):
+            self.v_moving_enemy = Vertical_moving_enemies(GREY, v_enemy_location_list_x[i], v_enemy_location_list_y[i], 1, 550)
             self.v_enemies_group.add(self.v_moving_enemy)
             self.enemies_group.add(self.v_moving_enemy)
             self.all_sprites_group.add(self.v_moving_enemy)
 
         #create enemies which move horizontally
-        for i in range(len(h_enemy_location_list_x)):
-            self.h_moving_enemy = Horizontal_moving_enemies(GREY, h_enemy_location_list_x[i], h_enemy_location_list_y[i], 2, 550)
+        for i in range(1):
+            self.h_moving_enemy = Horizontal_moving_enemies(GREY, h_enemy_location_list_x[i], h_enemy_location_list_y[i], 1, 550)
             self.h_enemies_group.add(self.h_moving_enemy)
             self.enemies_group.add(self.h_moving_enemy)
             self.all_sprites_group.add(self.h_moving_enemy)
@@ -715,6 +754,8 @@ class Game():
         self.all_sprites_group.update()
         self.all_sprites_group.draw (screen)
 
+        screen.blit(exit_txt, (383, 20))
+
         coin_num = font.render(str(self.coin_num), True, WHITE)
         screen.blit(coin_num, (SCREEN_W/20,23))
         
@@ -722,7 +763,8 @@ class Game():
         if self.level_complete > 0:
             screen.blit(self.level_complete_mesg, (SCREEN_W/3,340)) #blits message onto screen
             self.level_complete -= 1 #creates short time for it to be shown
-        #draw here
+            if self.level_complete == 1:
+                screen_change = 'splashscreen'
 
         
 
@@ -791,8 +833,8 @@ class Game():
             self.player_1.rect.x = 10
             self.player_1.rect.y = 680
             #sets the timer variable for displaying level complete message
-            self.level_complete = 500
-            screen_change = 'splashscreen'
+            self.level_complete = 200
+            
 
 
 
@@ -862,15 +904,15 @@ class Game_2():
 
 
         #create enemies which move vertically
-        for i in range(len(v_enemy_location_list_x_2)):
-            self.v_moving_enemy = Vertical_moving_enemies(GREY, v_enemy_location_list_x_2[i], v_enemy_location_list_y_2[i], 2, 550)
+        for i in range(1,3):
+            self.v_moving_enemy = Vertical_moving_enemies(GREY, v_enemy_location_list_x[i], v_enemy_location_list_y[i], 1, 550)
             self.v_enemies_group.add(self.v_moving_enemy)
             self.enemies_group.add(self.v_moving_enemy)
             self.all_sprites_group.add(self.v_moving_enemy)
 
         #create enemies which move horizontally
-        for i in range(len(h_enemy_location_list_x_2)):
-            self.h_moving_enemy = Horizontal_moving_enemies(GREY, h_enemy_location_list_x_2[i], h_enemy_location_list_y_2[i], 2, 550)
+        for i in range(1,2):
+            self.h_moving_enemy = Horizontal_moving_enemies(GREY, h_enemy_location_list_x[i], h_enemy_location_list_y[i], 1, 550)
             self.h_enemies_group.add(self.h_moving_enemy)
             self.enemies_group.add(self.h_moving_enemy)
             self.all_sprites_group.add(self.h_moving_enemy)
@@ -890,8 +932,8 @@ class Game_2():
                 self.all_sprites_group.add(heart)
 
         #create coin objects
-        for i in range(len(coins_location_list_x)):
-            coin = Coins(coins_location_list_x[i], coins_location_list_y[i])
+        for i in range(len(coins_location_list_x_2)):
+            coin = Coins(coins_location_list_x_2[i], coins_location_list_y_2[i])
             self.coins_group.add(coin)
             self.all_sprites_group.add(coin)
 
@@ -924,9 +966,17 @@ class Game_2():
     #  drawing and updating sprites
         screen.fill (BLACK)        
         self.clock.tick(60)
-        screen.blit(Background_level1, (0,0))
+        screen.blit(Background_level2, (0,0))
+
+        screen.blit(lvl2_title, (420, 90))
+
+        
         self.all_sprites_group.update()
+        #draw here
         self.all_sprites_group.draw (screen)
+
+        
+        screen.blit(exit_txt, (383, 80))
 
         coin_num = font.render(str(self.coin_num), True, WHITE)
         screen.blit(coin_num, (SCREEN_W/20,23))
@@ -935,7 +985,9 @@ class Game_2():
         if self.level_complete > 0:
             screen.blit(self.level_complete_mesg, (SCREEN_W/3,340)) #blits message onto screen
             self.level_complete -= 1 #creates short time for it to be shown
-        #draw here
+            if self.level_complete == 1:
+                screen_change = 'splashscreen'
+        
 
         
 
@@ -1004,9 +1056,187 @@ class Game_2():
             self.player_1.rect.x = 10
             self.player_1.rect.y = 680
             #sets the timer variable for displaying level complete message
-            self.level_complete = 500
-            screen_change = 'splashscreen'
+            self.level_complete = 200
+            
 
+class Game_3():
+    def __init__():
+        pass
+
+
+
+class Skin_Screen():
+    def __init__(self):
+
+        
+        #Manages how fast screen refreshes
+        self.clock = pygame.time.Clock()
+
+        #create group of background images
+        self.background_group = pygame.sprite.Group()
+
+        #creates a group of player(s)
+        self.player_group = pygame.sprite.Group()
+
+        #create group of enemies
+        self.enemies_group = pygame.sprite.Group()
+
+        #create group of lives
+        self.lives_list = pygame.sprite.Group()
+
+        #create display of number of coins
+        self.coin_display_list = pygame.sprite.Group()
+
+        #create a list for the map walls
+        self.wall_list = pygame.sprite.Group()
+
+        #create a list of all sprites
+        self.all_sprites_group = pygame.sprite.Group()
+        
+        #create player 1
+        self.player_1 = Player(blue_w_border, "Player 1")
+        self.player_group.add(self.player_1)
+        self.all_sprites_group.add(self.player_1)        
+
+        self.num_lives = LIVES_NUM
+
+        self.coin_num  = COINS_NUM
+        
+
+        #create lives object
+        
+        for x in range(self.num_lives):
+            for z in range(700, 730 +(x*30), 30):
+                heart = Lives(z, 5)
+                self.lives_list.add(heart)
+                self.all_sprites_group.add(heart)
+
+
+        #create display of coin count
+        coin_count = Coins_display(20, 20)
+        self.coin_display_list.add(coin_count)
+        self.all_sprites_group.add(coin_count)
+
+
+
+    # def init_map(self):
+
+
+        # #create map
+
+        # for y in range(18):
+        #     for x in range(24):
+        #         if splash_screen_list[y][x] == 1:
+        #             my_wall = Maps(x*40, y*40)
+        #             self.wall_list.add(my_wall)
+        #             self.all_sprites_group.add(my_wall)
+
+                    
+    def logic(self):
+        
+        global screen_change
+
+
+        keys = pygame.key.get_pressed()
+
+
+        
+
+
+
+    # def draw(self):
+
+
+        #clock ticker
+        self.clock.tick(60)
+        #drawing on the splash screen
+        screen.fill (BLACK)
+
+        #draw areas on the home screen to different levels
+        screen.blit(s_s_lvl1g, (50,0))
+        screen.blit(s_s_lvl2g, (300,0))
+        screen.blit(s_s_lvl3g, (550,0))
+        screen.blit(s_s_skinsg, (800,0))
+
+        
+
+        screen.blit(skinsshop_txt, (835, 80))
+
+
+
+        if self.player_1.rect.x < 50:
+            #blits help message in the level area if within the area
+            screen.blit(tutorial_txt, (68, 450))
+            #level number blitting
+            screen.blit(lvl1_txt, (125, 80))
+            screen.blit(lvl2_txt, (375, 80))
+            screen.blit(lvl3_txt, (625, 80))
+
+
+        #changing levels based on area on splash screen
+        if self.player_1.rect.x >= 50 and self.player_1.rect.x < 300:
+            #blits help message in the level area if within the area
+            screen.blit(help_txt, (80, 93))
+            #level number blitting
+            screen.blit(lvl1_txt, (170, 80))
+            screen.blit(lvl2_txt, (375, 80))
+            screen.blit(lvl3_txt, (625, 80))
+            if keys[pygame.K_UP]:
+                screen_change = 'lvl1'
+                
+        
+        if self.player_1.rect.x >= 300 and self.player_1.rect.x < 550:
+            #blits help message in the level area if within the area
+            screen.blit(help_txt, (330, 93))
+            #level number blitting
+            screen.blit(lvl1_txt, (125, 80))
+            screen.blit(lvl2_txt, (420, 80))
+            screen.blit(lvl3_txt, (625, 80))
+            if keys[pygame.K_UP]:
+                screen_change = 'lvl2'
+
+        if self.player_1.rect.x >= 550 and self.player_1.rect.x < 800:
+            #blits help message in the level area if within the area
+            screen.blit(help_txt, (580, 93))
+            #level number blitting
+            screen.blit(lvl1_txt, (125, 80))
+            screen.blit(lvl2_txt, (375, 80))
+            screen.blit(lvl3_txt, (670, 80))
+            if keys[pygame.K_UP]:
+                screen_change = 'lvl3'
+
+        if self.player_1.rect.x >= 800:
+            screen.blit(help_txt_skins, (850, 70))
+            #level number blitting
+            screen.blit(lvl1_txt, (125, 80))
+            screen.blit(lvl2_txt, (375, 80))
+            screen.blit(lvl3_txt, (625, 80))
+            if keys[pygame.K_UP]:
+                screen_change = 'skins'
+            
+
+
+        
+
+        #updates moving sprites
+        self.all_sprites_group.update()
+        self.all_sprites_group.draw (screen)
+
+
+        
+
+        #draws title on splash screen
+        screen.blit(ms_game_title, (SCREEN_W/15, 300)) 
+
+        #draws number of coins
+        coin_num = font.render(str(self.coin_num), True, WHITE)
+        screen.blit(coin_num, (SCREEN_W/20,23))
+
+        #flip display to reveal new postion of objects (refreshes screen)
+        pygame.display.flip()
+
+
+        
 
 
         
@@ -1040,6 +1270,10 @@ while not done:
             game = Game()
         elif screen_change == 'lvl2':
             game = Game_2()
+        elif screen_change == 'lvl3':
+            game = Game_3()
+        elif screen_change == 'skins':
+            game = Skin_Screen()
         elif screen_change == 'splashscreen':
             game = Splash_Screen()
         screen_change = 'No'
