@@ -40,9 +40,26 @@ GREY = (150,150,150)
 blue_w_border = pygame.image.load('blue_w_border.png').convert_alpha()
 blue_w_border = pygame.transform.scale(blue_w_border, (40,40))
 
+purple_w_border = pygame.image.load('purple_w_border.png').convert_alpha()
+purple_w_border = pygame.transform.scale(purple_w_border, (40,40))
+
+gold_w_border = pygame.image.load('gold_w_border.png').convert_alpha()
+gold_w_border = pygame.transform.scale(gold_w_border, (40,40))
+
 kanyewest_skin = pygame.image.load('kanyewest_skin.png').convert_alpha()
 kanyewest_skin = pygame.transform.scale(kanyewest_skin, (40,40))
 
+creeper_skin = pygame.image.load('creeper_skin.png').convert_alpha()
+creeper_skin = pygame.transform.scale(creeper_skin, (40,40))
+
+skeleton_skin = pygame.image.load('skeleton_skin.png').convert_alpha()
+skeleton_skin = pygame.transform.scale(skeleton_skin, (40,40))
+
+zombie_skin = pygame.image.load('zombie_skin.png').convert_alpha()
+zombie_skin = pygame.transform.scale(zombie_skin, (40,40))
+
+walterwhite_skin = pygame.image.load('walterwhite_skin.jpg').convert_alpha()
+walterwhite_skin = pygame.transform.scale(walterwhite_skin, (40,40))
 
 
 #text fonts
@@ -72,12 +89,16 @@ tutorial_txt = help_txt_font_L.render('use arrow keys to move side to side and j
 
 exit_txt = help_txt_font.render('press 0 to return to home screen', True, WHITE)
 
+return_home_text = help_txt_font_L.render('Home Screen', True, GREY)
+
 #screen title texts
 ms_game_title = title_font.render('SQUARE EXPLORE', True, BLUE)
 
 lvl1_title = lvl_title_font.render('LEVEL 1', True, BLUE)
 lvl2_title = lvl_title_font.render('LEVEL 2', True, BLUE)
 lvl3_title = lvl_title_font.render('LEVEL 3', True, BLUE)
+
+skins_menu_title = title_font.render('SKINS', True, BLUE)
 
 
 
@@ -94,12 +115,22 @@ Enemy_icon = pygame.transform.scale(Enemy_icon, (20,20))
 Block_texture_level1 = pygame.image.load('blocktexturelevel1.png').convert_alpha()
 Block_texture_level1 = pygame.transform.scale(Block_texture_level1, (40,40))
 
+Block_texture_skinsmenu = pygame.image.load('skinsmenublock.jpg').convert_alpha()
+Block_texture_skinsmenu = pygame.transform.scale(Block_texture_skinsmenu, (40,40))
 
 Background_level1 = pygame.image.load('backgroundimageL1.jpg').convert_alpha()
 Background_level1 = pygame.transform.scale(Background_level1, (960,720))
 
 Background_level2 = pygame.image.load('backgroundimageL2.jpg').convert_alpha()
 Background_level2 = pygame.transform.scale(Background_level2, (960,720))
+
+
+
+Background_skins_menu1 = pygame.image.load('skinsmenu1.png').convert_alpha()
+Background_skins_menu1 = pygame.transform.scale(Background_skins_menu1, (2000, 720))
+
+Background_skins_menu2 = pygame.image.load('skinsmenu2.png').convert_alpha()
+Background_skins_menu2 = pygame.transform.scale(Background_skins_menu2, (2010, 720))
 
 
 Coin_icon = pygame.image.load('coinicon.png').convert_alpha()
@@ -183,6 +214,25 @@ map_2_list =[[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0], # =24 columns, #
             [0,0,0,0,0,1,1,1,0,0,0,1,1,1,0,0,0,0,0,0,0,0,0,0]]
 
 
+skins_menu_list =[[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0], # =24 columns, # = 18 rows
+            [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+            [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+            [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+            [0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]]
+
 
 #list of locations for static enemies
 static_enemy_location_list_x = [520, 560, 520, 560, 920, 920, 360]
@@ -256,7 +306,11 @@ class Player(pygame.sprite.Sprite):
         
 
 
+    def set_skin(self, newskin):
+        skin = newskin
+        self.image = skin
 
+        
 
     def update(self):
         global screen_change
@@ -395,9 +449,9 @@ class Lives(pygame.sprite.Sprite):
 
 #map class
 class Maps(pygame.sprite.Sprite):
-    def __init__(self, x_ref, y_ref):
+    def __init__(self, x_ref, y_ref, skin):
         super().__init__()
-        self.image = Block_texture_level1
+        self.image = skin #sets skin for blocks to image reference
         self.rect = self.image.get_rect()
         self.rect.x = x_ref
         self.rect.y = y_ref
@@ -615,10 +669,6 @@ class Splash_Screen():
 
 
 
-        
-
-
-
 #level 1 class
 class Game():
     def __init__(self):
@@ -732,7 +782,7 @@ class Game():
         for y in range(18):
             for x in range(24):
                 if map_1_list[y][x] == 1:
-                    my_wall = Maps(x*40, y*40)
+                    my_wall = Maps(x*40, y*40, Block_texture_level1)
                     self.wall_list.add(my_wall)
                     self.all_sprites_group.add(my_wall)
 
@@ -951,7 +1001,7 @@ class Game_2():
         for y in range(18):
             for x in range(24):
                 if map_2_list[y][x] == 1:
-                    my_wall = Maps(x*40, y*40)
+                    my_wall = Maps(x*40, y*40, Block_texture_level1)
                     self.wall_list.add(my_wall)
                     self.all_sprites_group.add(my_wall)
 
@@ -1068,6 +1118,8 @@ class Game_3():
 class Skin_Screen():
     def __init__(self):
 
+        self.img1_x = 0
+        self.img2_x = 2000
         
         #Manages how fast screen refreshes
         self.clock = pygame.time.Clock()
@@ -1089,6 +1141,24 @@ class Skin_Screen():
 
         #create a list for the map walls
         self.wall_list = pygame.sprite.Group()
+
+        #create finish flag group
+        self.finish_group = pygame.sprite.Group()
+
+        #create skin groups
+        self.skin1_group = pygame.sprite.Group()
+        self.skin2_group = pygame.sprite.Group()
+        self.skin3_group = pygame.sprite.Group()
+        self.skin4_group = pygame.sprite.Group()
+        self.skin5_group = pygame.sprite.Group()
+        self.skin6_group = pygame.sprite.Group()
+        self.skin7_group = pygame.sprite.Group()
+        self.skin8_group = pygame.sprite.Group()
+        self.skin9_group = pygame.sprite.Group()
+        self.skin10_group = pygame.sprite.Group()
+        self.skin11_group = pygame.sprite.Group()
+        self.skin12_group = pygame.sprite.Group()
+
 
         #create a list of all sprites
         self.all_sprites_group = pygame.sprite.Group()
@@ -1117,20 +1187,68 @@ class Skin_Screen():
         self.coin_display_list.add(coin_count)
         self.all_sprites_group.add(coin_count)
 
+        #create finish flag object
+        finish = Finish_Flag(GREY, 40, 80, 900, 640)
+        self.finish_group.add(finish)
+        self.all_sprites_group.add(finish)
 
 
-    # def init_map(self):
+        #create map
+        for y in range(18):
+            for x in range(24):
+                if skins_menu_list[y][x] == 1:
+                    my_wall = Maps(x*40, y*40, Block_texture_skinsmenu)
+                    self.wall_list.add(my_wall)
+                    self.all_sprites_group.add(my_wall)
 
+        #creating skin blocks
+        self.skin_1 = Maps(80, 600, blue_w_border)
+        self.skin1_group.add(self.skin_1)
+        self.all_sprites_group.add(self.skin_1)
 
-        # #create map
+        self.skin_2 = Maps(320, 600, purple_w_border)
+        self.skin2_group.add(self.skin_2)
+        self.all_sprites_group.add(self.skin_2)
 
-        # for y in range(18):
-        #     for x in range(24):
-        #         if splash_screen_list[y][x] == 1:
-        #             my_wall = Maps(x*40, y*40)
-        #             self.wall_list.add(my_wall)
-        #             self.all_sprites_group.add(my_wall)
+        self.skin_3 = Maps(560, 600, gold_w_border)
+        self.skin3_group.add(self.skin_3)
+        self.all_sprites_group.add(self.skin_3)
 
+        self.skin_4 = Maps(200, 440, creeper_skin)
+        self.skin4_group.add(self.skin_4)
+        self.all_sprites_group.add(self.skin_4)
+
+        self.skin_5 = Maps(440, 440, skeleton_skin)
+        self.skin5_group.add(self.skin_5)
+        self.all_sprites_group.add(self.skin_5)
+
+        self.skin_6 = Maps(680, 440, zombie_skin)
+        self.skin6_group.add(self.skin_6)
+        self.all_sprites_group.add(self.skin_6)
+
+        self.skin_7 = Maps(80, 280, blue_w_border)
+        self.skin7_group.add(self.skin_7)
+        self.all_sprites_group.add(self.skin_7)
+
+        self.skin_8 = Maps(320, 280, kanyewest_skin)
+        self.skin8_group.add(self.skin_8)
+        self.all_sprites_group.add(self.skin_8)
+
+        self.skin_9 = Maps(560, 280, walterwhite_skin)
+        self.skin9_group.add(self.skin_9)
+        self.all_sprites_group.add(self.skin_9)
+
+        self.skin_10 = Maps(200, 120, blue_w_border)
+        self.skin10_group.add(self.skin_10)
+        self.all_sprites_group.add(self.skin_10)
+
+        self.skin_11 = Maps(440, 120, blue_w_border)
+        self.skin11_group.add(self.skin_11)
+        self.all_sprites_group.add(self.skin_11)
+
+        self.skin_12 = Maps(680, 120, blue_w_border)
+        self.skin12_group.add(self.skin_12)
+        self.all_sprites_group.add(self.skin_12)
                     
     def logic(self):
         
@@ -1140,11 +1258,6 @@ class Skin_Screen():
         keys = pygame.key.get_pressed()
 
 
-        
-
-
-
-    # def draw(self):
 
 
         #clock ticker
@@ -1152,72 +1265,82 @@ class Skin_Screen():
         #drawing on the splash screen
         screen.fill (BLACK)
 
-        #draw areas on the home screen to different levels
-        screen.blit(s_s_lvl1g, (50,0))
-        screen.blit(s_s_lvl2g, (300,0))
-        screen.blit(s_s_lvl3g, (550,0))
-        screen.blit(s_s_skinsg, (800,0))
-
-        
-
-        screen.blit(skinsshop_txt, (835, 80))
-
-
-
-        if self.player_1.rect.x < 50:
-            #blits help message in the level area if within the area
-            screen.blit(tutorial_txt, (68, 450))
-            #level number blitting
-            screen.blit(lvl1_txt, (125, 80))
-            screen.blit(lvl2_txt, (375, 80))
-            screen.blit(lvl3_txt, (625, 80))
-
-
-        #changing levels based on area on splash screen
-        if self.player_1.rect.x >= 50 and self.player_1.rect.x < 300:
-            #blits help message in the level area if within the area
-            screen.blit(help_txt, (80, 93))
-            #level number blitting
-            screen.blit(lvl1_txt, (170, 80))
-            screen.blit(lvl2_txt, (375, 80))
-            screen.blit(lvl3_txt, (625, 80))
-            if keys[pygame.K_UP]:
-                screen_change = 'lvl1'
-                
-        
-        if self.player_1.rect.x >= 300 and self.player_1.rect.x < 550:
-            #blits help message in the level area if within the area
-            screen.blit(help_txt, (330, 93))
-            #level number blitting
-            screen.blit(lvl1_txt, (125, 80))
-            screen.blit(lvl2_txt, (420, 80))
-            screen.blit(lvl3_txt, (625, 80))
-            if keys[pygame.K_UP]:
-                screen_change = 'lvl2'
-
-        if self.player_1.rect.x >= 550 and self.player_1.rect.x < 800:
-            #blits help message in the level area if within the area
-            screen.blit(help_txt, (580, 93))
-            #level number blitting
-            screen.blit(lvl1_txt, (125, 80))
-            screen.blit(lvl2_txt, (375, 80))
-            screen.blit(lvl3_txt, (670, 80))
-            if keys[pygame.K_UP]:
-                screen_change = 'lvl3'
-
-        if self.player_1.rect.x >= 800:
-            screen.blit(help_txt_skins, (850, 70))
-            #level number blitting
-            screen.blit(lvl1_txt, (125, 80))
-            screen.blit(lvl2_txt, (375, 80))
-            screen.blit(lvl3_txt, (625, 80))
-            if keys[pygame.K_UP]:
-                screen_change = 'skins'
-            
+        #loop for background animation
+        if self.img1_x > -3000: 
+            screen.blit(Background_skins_menu1, (self.img1_x,0))
+            self.img1_x -= 10
+        else:
+            self.img1_x = 1000
+        #second image loop
+        if self.img2_x > -2000:
+            screen.blit(Background_skins_menu2, (self.img2_x,0))
+            self.img2_x -= 10
+        else:
+            self.img2_x = 2000
 
 
         
+        #check coordinates to change skins
+        skin1_hit_list = pygame.sprite.spritecollide(self.player_1, self.skin1_group, False)
+        for collision in skin1_hit_list:
+            self.player_1.set_skin(blue_w_border)
+            #make set and get function for player
 
+        skin2_hit_list = pygame.sprite.spritecollide(self.player_1, self.skin2_group, False)
+        for collision in skin2_hit_list:
+            self.player_1.set_skin(purple_w_border)
+
+
+        skin3_hit_list = pygame.sprite.spritecollide(self.player_1, self.skin3_group, False)
+        for collision in skin3_hit_list:
+            self.player_1.set_skin(gold_w_border)
+
+
+        skin4_hit_list = pygame.sprite.spritecollide(self.player_1, self.skin4_group, False)
+        for collision in skin4_hit_list:
+            self.player_1.set_skin(creeper_skin)
+
+
+        skin5_hit_list = pygame.sprite.spritecollide(self.player_1, self.skin5_group, False)
+        for collision in skin5_hit_list:
+            self.player_1.set_skin(skeleton_skin)
+
+
+        skin6_hit_list = pygame.sprite.spritecollide(self.player_1, self.skin6_group, False)
+        for collision in skin6_hit_list:
+            self.player_1.set_skin(zombie_skin)
+
+        skin7_hit_list = pygame.sprite.spritecollide(self.player_1, self.skin7_group, False)
+        for collision in skin7_hit_list:
+            self.player_1.set_skin(blue_w_border)
+            #make set and get function for player
+
+        skin8_hit_list = pygame.sprite.spritecollide(self.player_1, self.skin8_group, False)
+        for collision in skin8_hit_list:
+            self.player_1.set_skin(kanyewest_skin)
+
+
+        skin9_hit_list = pygame.sprite.spritecollide(self.player_1, self.skin9_group, False)
+        for collision in skin9_hit_list:
+            self.player_1.set_skin(walterwhite_skin)
+
+
+        skin10_hit_list = pygame.sprite.spritecollide(self.player_1, self.skin10_group, False)
+        for collision in skin10_hit_list:
+            self.player_1.set_skin(creeper_skin)
+
+
+        skin11_hit_list = pygame.sprite.spritecollide(self.player_1, self.skin11_group, False)
+        for collision in skin11_hit_list:
+            self.player_1.set_skin(skeleton_skin)
+
+
+        skin12_hit_list = pygame.sprite.spritecollide(self.player_1, self.skin12_group, False)
+        for collision in skin12_hit_list:
+            self.player_1.set_skin(zombie_skin)
+
+
+        
         #updates moving sprites
         self.all_sprites_group.update()
         self.all_sprites_group.draw (screen)
@@ -1225,8 +1348,11 @@ class Skin_Screen():
 
         
 
-        #draws title on splash screen
-        screen.blit(ms_game_title, (SCREEN_W/15, 300)) 
+        #draws title on skins menu
+        screen.blit(skins_menu_title, (330, 7)) 
+
+        #draw return to home screen message
+        screen.blit(return_home_text, (760, 640))
 
         #draws number of coins
         coin_num = font.render(str(self.coin_num), True, WHITE)
@@ -1235,8 +1361,23 @@ class Skin_Screen():
         #flip display to reveal new postion of objects (refreshes screen)
         pygame.display.flip()
 
+        #check collision player and finish line
+        flag_hit_list = pygame.sprite.spritecollide(self.player_1, self.finish_group, False)
+        for collision in flag_hit_list:
+            screen_change = 'splashscreen'
 
-        
+        #checks for collision player and wall
+        wall_hit_list = pygame.sprite.spritecollide(self.player_1, self.wall_list, False)
+        for collision in wall_hit_list:
+            #sets player speed to 0
+            self.player_1.speed_x = 0
+            self.player_1.speed_y = 0
+            self.player_1.rect.x = self.player_1_old_x
+            self.player_1.rect.y = self.player_1_old_y
+        #resets player coordinates to last location
+        self.player_1_old_x = self.player_1.rect.x
+        self.player_1_old_y = self.player_1.rect.y
+
 
 
         
