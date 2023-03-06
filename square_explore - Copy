@@ -374,7 +374,7 @@ class Game():
         self.all_sprites_group_2.add(self.player_1)       
         #self.init_map()
 
-        self.num_lives = LIVES_NUM
+        lives_num = LIVES_NUM
 
         self.coin_num  = COINS_NUM
 
@@ -413,7 +413,7 @@ class Game():
 
         #create lives object
         
-        for x in range(self.num_lives):
+        for x in range(lives_num):
             for z in range(700, 730 +(x*30), 30):
                 heart = Lives(z, 5)
                 self.lives_list.add(heart)
@@ -600,11 +600,11 @@ class Game():
             #resets coordinates to startic coordinate
             self.player_1.rect.x = 10
             self.player_1.rect.y = 680
-            print(self.num_lives)
+            print(lives_num)
             #takes away a life
-            self.num_lives = self.num_lives - 1
+            lives_num = lives_num - 1
 
-            print(self.num_lives)
+            print(lives_num)
 
         
         #check collision player and coin

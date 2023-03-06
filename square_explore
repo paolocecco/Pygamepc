@@ -11,7 +11,7 @@ import pygame_menu
 SCREEN_H = 720
 SCREEN_W = 960
 PLAYER_HEIGHT = 40
-size = (960,720)
+size = (SCREEN_W,SCREEN_H)
 sizelvl3 = (1440,720)
 screen = pygame.display.set_mode(size)
 
@@ -112,6 +112,9 @@ lvl3_title = lvl_title_font.render('LEVEL 3', True, BLUE)
 
 skins_menu_title = title_font.render('SKINS', True, BLUE)
 
+#game lost text
+lose_txt = title_font.render('YOU LOST', True, RED)
+
 
 
 #Icons for objects
@@ -135,6 +138,9 @@ Background_level1 = pygame.transform.scale(Background_level1, (960,720))
 
 Background_level2 = pygame.image.load('backgroundimageL2.jpg').convert_alpha()
 Background_level2 = pygame.transform.scale(Background_level2, (960,720))
+
+Background_level3 = pygame.image.load('backgroundimageL3.jpg').convert_alpha()
+Background_level3 = pygame.transform.scale(Background_level3, (1440,720))
 
 
 #level 3 icons
@@ -168,7 +174,7 @@ s_s_lvl1g = pygame.transform.scale(s_s_lvl1g, (250,720))
 s_s_lvl2g = pygame.image.load('lvl2ssgradient.png').convert_alpha()
 s_s_lvl2g = pygame.transform.scale(s_s_lvl2g, (250,720))
 
-s_s_lvl3g = pygame.image.load('lvl3ssgradient.png').convert_alpha()
+s_s_lvl3g = pygame.image.load('lvl3ssgradient.jpg').convert_alpha()
 s_s_lvl3g = pygame.transform.scale(s_s_lvl3g, (250,720))
 
 s_s_skinsg = pygame.image.load('skinssgradient.png').convert_alpha()
@@ -238,23 +244,23 @@ map_2_list =[[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0], # =24 columns, #
 
 
 map_3_list =[[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0], # =36 columns, =  18rows
-            [0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-            [0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-            [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0],
-            [1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-            [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-            [0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-            [0,0,0,1,1,1,0,0,0,1,0,0,0,1,1,0,0,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-            [1,0,0,1,0,1,1,1,0,0,0,1,1,1,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-            [0,0,0,1,0,0,0,1,1,1,1,1,1,1,0,0,0,0,0,1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0],
-            [0,0,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-            [0,0,0,1,0,0,0,0,1,1,0,0,0,1,1,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-            [1,0,0,1,0,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0],
-            [0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-            [0,0,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-            [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0],
-            [0,0,0,0,0,0,0,1,0,0,0,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-            [0,0,0,0,0,1,1,1,0,0,0,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]]
+            [0,0,0,0,1,1,0,0,1,1,0,0,0,1,1,1,1,0,0,0,0,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0],
+            [1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,0,0,0,1,1,1,1],
+            [0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            [0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            [0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,1,1,0,0,0,1,1,0,0,0,1,1,0,0,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            [0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0],
+            [1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,1,1,1,0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,1,1,1,1,0,0,0,0],
+            [0,0,0,0,0,0,0,0,1,1,0,0,0,1,1,0,0,0,0,1,1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,1],
+            [0,0,0,0,0,1,1,1,1,0,0,0,0,0,1,1,1,1,1,1,1,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0],
+            [0,0,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0],
+            [1,1,1,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0,1,1,1,1,1,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]]
 
 
 
@@ -285,10 +291,14 @@ static_enemy_location_list_y = [560, 560, 480, 480, 560, 520, 120]
 s_enemy_location_list_x_2 = [320, 360, 400, 560, 600, 920, 920, 720, 320, 360, 400, 160, 400, 640]
 s_enemy_location_list_y_2 = [680, 680, 680, 680, 680, 560, 520, 240, 320, 320, 320, 000, 000, 000]
 
+s_enemy_location_list_x_3 = [560,600,640,680,720,760,800,840,880,920,960,1000,1040,1080,1120,1160,1200,1240,1280,1320,1360,1400,   120,160,240,280,   400,480,   1120,   200,240,280,600,640,680,720,0]
+s_enemy_location_list_y_3 = [680,680,680,680,680,680,680,680,680,680,680,680, 680, 680, 680, 680, 680, 680, 680, 680, 680,  680,   560,560,520,520,   440,440,   360 ,   440,440,440,440,440,440,440,120]
+
 
 #list of locations for horizontal moving enemies
 h_enemy_location_list_x = [280,   750]
 h_enemy_location_list_y = [450,   690]
+
 
 # h_enemy_location_list_x_2 = [740]
 # h_enemy_location_list_y_2 = [690]
@@ -310,9 +320,8 @@ coins_location_list_x_2 = [165, 925,   5, 285, 885, 325]
 coins_location_list_y_2 = [325, 685, 365, 205, 165, 645]
 
 
-LIVES_NUM = 5
+lives_num = 5
 
-COINS_NUM = 0
 coinsNum = 0
 
 currentSkin = blue_w_border
@@ -367,10 +376,9 @@ class Player(pygame.sprite.Sprite):
 
         global game
 
-        if game == Game_3():
-            SCREEN_W = 1440
-        else:
-            SCREEN_W = 960
+            
+
+        size = (1440,SCREEN_H)
 
         keys = pygame.key.get_pressed()
 
@@ -383,10 +391,10 @@ class Player(pygame.sprite.Sprite):
         if keys[pygame.K_1]:
             screen_change = 'lvl1'
 
-        if keys[pygame.K_LEFT] and self.rect.x > self.vel: 
+        if keys[pygame.K_LEFT] and self.rect.x > 0: 
             self.rect.x -= self.vel
         #records right key presses
-        if keys[pygame.K_RIGHT] and self.rect.x < SCREEN_W - self.vel - PLAYER_HEIGHT:  
+        if keys[pygame.K_RIGHT] and self.rect.x < size[0] - self.vel - PLAYER_HEIGHT:  
             self.rect.x += self.vel
         #the jumping loop
         if not(self.isJump): #checks if attribute 'isJump' is false, making sure the player is not already jumping
@@ -407,14 +415,14 @@ class Player(pygame.sprite.Sprite):
         
 
         #checks player is within boundaries                                 
-        if (self.rect.x >= 0) and (self.rect.x <= SCREEN_W - PLAYER_HEIGHT):
+        if (self.rect.x >= 0) and (self.rect.x <= size[0] - PLAYER_HEIGHT):
             #adds speed value to coordinate
             self.rect.x += self.speed_x
         elif (self.rect.x < 0):
             #else keeps player within boundaries
             self.rect.x = 0
-        elif (self.rect.x > SCREEN_W - PLAYER_HEIGHT):
-            self.rect.x = (SCREEN_W - PLAYER_HEIGHT)
+        elif (self.rect.x > size[0] - PLAYER_HEIGHT):
+            self.rect.x = (size[0] - PLAYER_HEIGHT)
         #checks y boundaries
         if (self.rect.y <= SCREEN_H - PLAYER_HEIGHT):
             self.rect.y += self.speed_y
@@ -499,6 +507,9 @@ class Lives(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect.x = x_ref
         self.rect.y = y_ref
+        # lives_N = lives_num
+
+
         
 
 
@@ -579,18 +590,17 @@ class Splash_Screen():
         self.player_group.add(self.player_1)
         self.all_sprites_group.add(self.player_1)        
 
-        self.num_lives = LIVES_NUM
+        global lives_num
 
         
         
 
         #create lives object
-        
-        for x in range(self.num_lives):
-            for z in range(700, 730 +(x*30), 30):
-                heart = Lives(z, 5)
-                self.lives_list.add(heart)
-                self.all_sprites_group.add(heart)
+        # for x in range(lives_num):
+        for z in range(700, 700 +((lives_num)*30), 30):
+            heart = Lives(z, 5)
+            self.lives_list.add(heart)
+            self.all_sprites_group.add(heart)
 
 
         #create display of coin count
@@ -619,14 +629,19 @@ class Splash_Screen():
 
         global coinsNum
 
+        global lives_num
 
         keys = pygame.key.get_pressed()
 
         screen = pygame.display.set_mode(size)
 
+        if keys[pygame.K_3]:
+            if coinsNum >= 3 and lives_num <=6:
+                coinsNum -=3
+                lives_num += 1
+
         
-
-
+              
 
     # def draw(self):
 
@@ -716,6 +731,14 @@ class Splash_Screen():
         coin_num = font.render(str(coinsNum), True, WHITE)
         screen.blit(coin_num, (SCREEN_W/20,23))
 
+
+        #lose function, displays message then exits game
+        if lives_num <0:
+            loop = 300
+            while loop > 1:
+                screen.blit(lose_txt, (250, 80))
+                loop -=1
+
         #flip display to reveal new postion of objects (refreshes screen)
         pygame.display.flip()
         
@@ -775,8 +798,7 @@ class Game():
         self.player_group.add(self.player_1)
         self.all_sprites_group.add(self.player_1)        
 
-        self.num_lives = LIVES_NUM
-
+        global lives_num
 
 
         #create still enemies
@@ -808,12 +830,12 @@ class Game():
         self.all_sprites_group.add(finish)
 
         #create lives object
+        # for x in range(lives_num):
+        for z in range(700, 700 +((lives_num)*30), 30):
+            heart = Lives(z, 5)
+            self.lives_list.add(heart)
+            self.all_sprites_group.add(heart)
         
-        for x in range(self.num_lives):
-            for z in range(700, 730 +(x*30), 30):
-                heart = Lives(z, 5)
-                self.lives_list.add(heart)
-                self.all_sprites_group.add(heart)
 
         #create coin objects
         for i in range(len(coins_location_list_x)):
@@ -843,12 +865,15 @@ class Game():
     def logic(self):
 
         global screen_change
-
+        global lives_num
         global coinsNum
+
+        
 
         keys = pygame.key.get_pressed()
         if keys[pygame.K_0]:
             screen_change = 'splashscreen'
+            print('screen is returned to home screen')
 
 
         screen = pygame.display.set_mode(size)
@@ -879,7 +904,10 @@ class Game():
 
         
 
-
+        #lose function, displays message then exits game
+        if lives_num <0:
+            screen_change = 'losescreen'
+            
 
         #flip display to reveal new postion of objects (refreshes screen)
         pygame.display.flip()
@@ -919,11 +947,11 @@ class Game():
             #resets coordinates to startic coordinate
             self.player_1.rect.x = 10
             self.player_1.rect.y = 680
-            print(self.num_lives)
+            print(lives_num)
             #takes away a life
-            self.num_lives = self.num_lives - 1
+            lives_num -= 1
 
-            print(self.num_lives)
+            print(lives_num)
 
         
         #check collision player and coin
@@ -1001,8 +1029,7 @@ class Game_2():
         self.player_group.add(self.player_1)
         self.all_sprites_group.add(self.player_1)        
 
-        self.num_lives = LIVES_NUM
-
+        global lives_num
 
         #create still enemies
         for i in range(len(s_enemy_location_list_x_2)):
@@ -1033,12 +1060,11 @@ class Game_2():
         self.all_sprites_group.add(finish)
 
         #create lives object
-        
-        for x in range(self.num_lives):
-            for z in range(700, 730 +(x*30), 30):
-                heart = Lives(z, 5)
-                self.lives_list.add(heart)
-                self.all_sprites_group.add(heart)
+        # for x in range(lives_num):
+        for z in range(700, 700 +((lives_num)*30), 30):
+            heart = Lives(z, 5)
+            self.lives_list.add(heart)
+            self.all_sprites_group.add(heart)
 
         #create coin objects
         for i in range(len(coins_location_list_x_2)):
@@ -1070,7 +1096,7 @@ class Game_2():
         screen = pygame.display.set_mode(size)
 
         global screen_change
-
+        global lives_num
         global coinsNum
 
         keys = pygame.key.get_pressed()
@@ -1110,7 +1136,10 @@ class Game_2():
 
         
 
-
+        #lose function, displays message then exits game
+        if lives_num <0:
+            screen_change = 'losescreen'
+            
 
         #flip display to reveal new postion of objects (refreshes screen)
         pygame.display.flip()
@@ -1150,11 +1179,11 @@ class Game_2():
             #resets coordinates to startic coordinate
             self.player_1.rect.x = 10
             self.player_1.rect.y = 680
-            print(self.num_lives)
+            print(lives_num)
             #takes away a life
-            self.num_lives = self.num_lives - 1
+            lives_num = lives_num - 1
 
-            print(self.num_lives)
+            print(lives_num)
 
         
         #check collision player and coin
@@ -1230,15 +1259,15 @@ class Game_3():
         self.player_group.add(self.player_1)
         self.all_sprites_group.add(self.player_1)        
 
-        self.num_lives = LIVES_NUM
+        global lives_num
 
 
         #create still enemies
-        # for i in range(len(s_enemy_location_list_x_2)):
-        #     static_enemy = Enemies(RED, s_enemy_location_list_x_2[i], s_enemy_location_list_y_2[i])
-        #     #add enemies into sprite groups
-        #     self.enemies_group.add(static_enemy)
-        #     self.all_sprites_group.add(static_enemy)
+        for i in range(len(s_enemy_location_list_x_3)):
+            static_enemy = Enemies(RED, s_enemy_location_list_x_3[i], s_enemy_location_list_y_3[i])
+            #add enemies into sprite groups
+            self.enemies_group.add(static_enemy)
+            self.all_sprites_group.add(static_enemy)
 
 
         #create enemies which move vertically
@@ -1257,17 +1286,16 @@ class Game_3():
 
 
         #create finish flag object
-        finish = Finish_Flag(GOLD, 40, 80, 900, 40)
+        finish = Finish_Flag(GOLD, 40, 80, 1340, 40)
         self.finish_group.add(finish)
         self.all_sprites_group.add(finish)
 
         #create lives object
-        
-        for x in range(self.num_lives):
-            for z in range(700, 730 +(x*30), 30):
-                heart = Lives(z, 5)
-                self.lives_list.add(heart)
-                self.all_sprites_group.add(heart)
+        # for x in range(lives_num):
+        for z in range(700, 700 +((lives_num)*30), 30):
+            heart = Lives(z, 5)
+            self.lives_list.add(heart)
+            self.all_sprites_group.add(heart)
 
         #create coin objects
         # for i in range(len(coins_location_list_x_2)):
@@ -1296,10 +1324,12 @@ class Game_3():
 
     def logic(self):
 
-        screen = pygame.display.set_mode(sizelvl3)
+        SCREEN_W = 1440
+        size = (SCREEN_W,SCREEN_H)
+        screen = pygame.display.set_mode(size)
 
         global screen_change
-
+        global lives_num
         global coinsNum
 
         keys = pygame.key.get_pressed()
@@ -1314,17 +1344,17 @@ class Game_3():
     #  drawing and updating sprites
         screen.fill (BLACK)        
         self.clock.tick(60)
-        #screen.blit(Background_level2, (0,0))
+        screen.blit(Background_level3, (0,0))
 
-        screen.blit(lvl3_title, (420, 90))
+        
 
         
         self.all_sprites_group.update()
         #draw here
         self.all_sprites_group.draw (screen)
 
-        
-        screen.blit(exit_txt, (383, 80))
+        screen.blit(lvl3_title, (680, 90))
+        screen.blit(exit_txt, (643, 80))
 
         coin_num = font.render(str(coinsNum), True, WHITE)
         screen.blit(coin_num, (SCREEN_W/20,23))
@@ -1339,7 +1369,10 @@ class Game_3():
 
         
 
-
+        #lose function, displays message then exits game
+        if lives_num <0:
+            screen_change = 'losescreen'
+            
 
         #flip display to reveal new postion of objects (refreshes screen)
         pygame.display.flip()
@@ -1379,11 +1412,11 @@ class Game_3():
             #resets coordinates to startic coordinate
             self.player_1.rect.x = 10
             self.player_1.rect.y = 680
-            print(self.num_lives)
+            print(lives_num)
             #takes away a life
-            self.num_lives = self.num_lives - 1
+            lives_num = lives_num - 1
 
-            print(self.num_lives)
+            print(lives_num)
 
         
         #check collision player and coin
@@ -1460,16 +1493,15 @@ class Skin_Screen():
         self.player_group.add(self.player_1)
         self.all_sprites_group.add(self.player_1)        
 
-        self.num_lives = LIVES_NUM
+        global lives_num
         
 
         #create lives object
-        
-        for x in range(self.num_lives):
-            for z in range(700, 730 +(x*30), 30):
-                heart = Lives(z, 5)
-                self.lives_list.add(heart)
-                self.all_sprites_group.add(heart)
+        # for x in range(lives_num):
+        for z in range(700, 700 +((lives_num)*30), 30):
+            heart = Lives(z, 5)
+            self.lives_list.add(heart)
+            self.all_sprites_group.add(heart)
 
 
         #create display of coin count
@@ -1542,7 +1574,7 @@ class Skin_Screen():
         global screen_change
         global currentSkin
         global coinsNum
-
+        global lives_num
         keys = pygame.key.get_pressed()
 
 
@@ -1678,13 +1710,34 @@ class Skin_Screen():
         self.player_1_old_y = self.player_1.rect.y
 
 
+class Lose_Screen():
+    def __init__(self):
+                
 
+        #Manages how fast screen refreshes
+        self.clock = pygame.time.Clock()
+
+
+    def logic(self):
+
+        global done
+        
+        screen.fill (BLACK)        
+        self.clock.tick(60)
+
+
+        #lose function, displays message then exits game
+        loop = 300
+        while loop > 1:
+            screen.blit(lose_txt, (250, 300))
+            loop -=1
+        # if loop == 1:
+        #     done = True
+        
+        pygame.display.flip()
         
         
-# menu = pygame_menu.Menu('Welcome', 400, 300,
-#                        theme=pygame_menu.themes.THEME_BLUE)
-        
-# menu.add.button('Start', game.run())
+
 
 
 
@@ -1700,9 +1753,6 @@ while not done:
     
 
     #user input and controls
-    #game.draw()
-    # game.handle_event()
-    # game.handle_collisions()
 
     game.logic()
     
@@ -1717,9 +1767,12 @@ while not done:
             game = Skin_Screen()
         elif screen_change == 'splashscreen':
             game = Splash_Screen()
+        elif screen_change == 'losescreen':
+            game = Lose_Screen()
         screen_change = 'No'
         
-        
+    
+
 
     for event in pygame.event.get():
         
@@ -1727,24 +1780,7 @@ while not done:
         if event.type == pygame.QUIT:
             done = True
         
-       
-
-        
     
-    #Game logic goes after this comment
-    
-
-    #game.run()
-    #screen background is BLACK
-    # screen.fill (BLACK)
-
-       
-    # #draw here
-
-    # #flip display to reveal new postion of objects (refreshes screen)
-    # pygame.display.flip()
-    # #clock ticks over
-    # clock.tick(60)
 
 #endwhile - End of game loop
 
