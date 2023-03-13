@@ -115,6 +115,8 @@ skins_menu_title = title_font.render('SKINS', True, BLUE)
 #game lost text
 lose_txt = title_font.render('YOU LOST', True, RED)
 
+retry_text = help_txt_font_L.render('exit and try again...', True, RED)
+
 
 
 #Icons for objects
@@ -296,20 +298,15 @@ s_enemy_location_list_y_3 = [680,680,680,680,680,680,680,680,680,680,680,680, 68
 
 
 #list of locations for horizontal moving enemies
-h_enemy_location_list_x = [280,   750]
-h_enemy_location_list_y = [450,   690]
+h_enemy_location_list_x = [280,   750,   530, 330, 430]
+h_enemy_location_list_y = [450,   690,   260, 260, 400]
 
-
-# h_enemy_location_list_x_2 = [740]
-# h_enemy_location_list_y_2 = [690]
 
 
 #list of locations for vertical moving enemies
-v_enemy_location_list_x = [680,   10, 940]
-v_enemy_location_list_y = [20,    20, 200]
+v_enemy_location_list_x = [680,   10, 940,   750, 1120, 980]
+v_enemy_location_list_y = [20,    20, 200,   180,   20, 380]
 
-# v_enemy_location_list_x_2 =[10]
-# v_enemy_location_list_y_2 =[20]
 
 
 #list of locations for coins
@@ -318,6 +315,10 @@ coins_location_list_y = [85, 565, 445, 365, 125]
 
 coins_location_list_x_2 = [165, 925,   5, 285, 885, 325]
 coins_location_list_y_2 = [325, 685, 365, 205, 165, 645]
+
+coins_location_list_x_3 = [0,  40, 0,  40, 805, 1405, 325, 365, 525, 565, 965, 685]
+coins_location_list_y_3 = [440,440,480,480,325, 405 , 380, 380, 380, 380, 605, 45]
+
 
 
 lives_num = 5
@@ -335,11 +336,6 @@ currentSkin = blue_w_border
 
 
 #CLASSES::::
-
-# class Game():
-#     __init__(self):
-        
-
 
 
 
@@ -430,7 +426,7 @@ class Player(pygame.sprite.Sprite):
             self.rect.y = SCREEN_H - PLAYER_HEIGHT
             self.speed_y = 0
 
-            #stop hitting da wall
+            #stop hitting the wall
         
 
 
@@ -499,6 +495,7 @@ class Horizontal_moving_enemies(Enemies):
         self.rect.x += self.enemy_speed
 
 
+
 #class to show lives
 class Lives(pygame.sprite.Sprite):
     def __init__(self, x_ref, y_ref):
@@ -507,7 +504,6 @@ class Lives(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect.x = x_ref
         self.rect.y = y_ref
-        # lives_N = lives_num
 
 
         
@@ -596,7 +592,6 @@ class Splash_Screen():
         
 
         #create lives object
-        # for x in range(lives_num):
         for z in range(700, 700 +((lives_num)*30), 30):
             heart = Lives(z, 5)
             self.lives_list.add(heart)
@@ -609,18 +604,6 @@ class Splash_Screen():
         self.all_sprites_group.add(coin_count)
 
 
-
-    # def init_map(self):
-
-
-        # #create map
-
-        # for y in range(18):
-        #     for x in range(24):
-        #         if splash_screen_list[y][x] == 1:
-        #             my_wall = Maps(x*40, y*40)
-        #             self.wall_list.add(my_wall)
-        #             self.all_sprites_group.add(my_wall)
 
                     
     def logic(self):
@@ -641,9 +624,6 @@ class Splash_Screen():
                 lives_num += 1
 
         
-              
-
-    # def draw(self):
 
 
         #clock ticker
@@ -830,7 +810,6 @@ class Game():
         self.all_sprites_group.add(finish)
 
         #create lives object
-        # for x in range(lives_num):
         for z in range(700, 700 +((lives_num)*30), 30):
             heart = Lives(z, 5)
             self.lives_list.add(heart)
@@ -887,6 +866,7 @@ class Game():
 
         screen.blit(lvl1_title, (420, 30))
 
+        #update and draw objects
         self.all_sprites_group.update()
         self.all_sprites_group.draw (screen)
 
@@ -916,15 +896,6 @@ class Game():
 
 
 
-        
-            
-
-
-
-        
-
-    # def handle_collisions(self):
-        #self.collision_types = {'top': False, 'bottom': False, 'right': False, 'left': False}
         #checks for collision player and wall
         wall_hit_list = pygame.sprite.spritecollide(self.player_1, self.wall_list, False)
         for collision in wall_hit_list:
@@ -1060,7 +1031,6 @@ class Game_2():
         self.all_sprites_group.add(finish)
 
         #create lives object
-        # for x in range(lives_num):
         for z in range(700, 700 +((lives_num)*30), 30):
             heart = Lives(z, 5)
             self.lives_list.add(heart)
@@ -1148,15 +1118,7 @@ class Game_2():
 
 
 
-        
-            
 
-
-
-        
-
-    # def handle_collisions(self):
-        #self.collision_types = {'top': False, 'bottom': False, 'right': False, 'left': False}
         #checks for collision player and wall
         wall_hit_list = pygame.sprite.spritecollide(self.player_1, self.wall_list, False)
         for collision in wall_hit_list:
@@ -1271,18 +1233,18 @@ class Game_3():
 
 
         #create enemies which move vertically
-        # for i in range(1,3):
-        #     self.v_moving_enemy = Vertical_moving_enemies(GREY, v_enemy_location_list_x[i], v_enemy_location_list_y[i], 1, 550)
-        #     self.v_enemies_group.add(self.v_moving_enemy)
-        #     self.enemies_group.add(self.v_moving_enemy)
-        #     self.all_sprites_group.add(self.v_moving_enemy)
+        for i in range(3,6):
+            self.v_moving_enemy = Vertical_moving_enemies(GREY, v_enemy_location_list_x[i], v_enemy_location_list_y[i], 1, 550)
+            self.v_enemies_group.add(self.v_moving_enemy)
+            self.enemies_group.add(self.v_moving_enemy)
+            self.all_sprites_group.add(self.v_moving_enemy)
 
         #create enemies which move horizontally
-        # for i in range(1,2):
-        #     self.h_moving_enemy = Horizontal_moving_enemies(GREY, h_enemy_location_list_x[i], h_enemy_location_list_y[i], 1, 550)
-        #     self.h_enemies_group.add(self.h_moving_enemy)
-        #     self.enemies_group.add(self.h_moving_enemy)
-        #     self.all_sprites_group.add(self.h_moving_enemy)
+        for i in range(2,5):
+            self.h_moving_enemy = Horizontal_moving_enemies(GREY, h_enemy_location_list_x[i], h_enemy_location_list_y[i], 1, 550)
+            self.h_enemies_group.add(self.h_moving_enemy)
+            self.enemies_group.add(self.h_moving_enemy)
+            self.all_sprites_group.add(self.h_moving_enemy)
 
 
         #create finish flag object
@@ -1291,17 +1253,16 @@ class Game_3():
         self.all_sprites_group.add(finish)
 
         #create lives object
-        # for x in range(lives_num):
         for z in range(700, 700 +((lives_num)*30), 30):
             heart = Lives(z, 5)
             self.lives_list.add(heart)
             self.all_sprites_group.add(heart)
 
         #create coin objects
-        # for i in range(len(coins_location_list_x_2)):
-        #     coin = Coins(coins_location_list_x_2[i], coins_location_list_y_2[i])
-        #     self.coins_group.add(coin)
-        #     self.all_sprites_group.add(coin)
+        for i in range(len(coins_location_list_x_3)):
+            coin = Coins(coins_location_list_x_3[i], coins_location_list_y_3[i])
+            self.coins_group.add(coin)
+            self.all_sprites_group.add(coin)
 
         #create display of coin count
         coin_count = Coins_display(20, 20)
@@ -1382,14 +1343,6 @@ class Game_3():
 
 
         
-            
-
-
-
-        
-
-    # def handle_collisions(self):
-        #self.collision_types = {'top': False, 'bottom': False, 'right': False, 'left': False}
         #checks for collision player and wall
         wall_hit_list = pygame.sprite.spritecollide(self.player_1, self.wall_list, False)
         for collision in wall_hit_list:
@@ -1727,9 +1680,10 @@ class Lose_Screen():
 
 
         #lose function, displays message then exits game
-        loop = 300
+        loop = 100
         while loop > 1:
-            screen.blit(lose_txt, (250, 300))
+            screen.blit(lose_txt, (230, 280))
+            screen.blit(retry_text, (700, 650))
             loop -=1
         # if loop == 1:
         #     done = True
@@ -1740,22 +1694,19 @@ class Lose_Screen():
 
 
 
-
+### GAME LOOP
 
 screen_change = 'No'
 
-### GAME LOOP
-
 game = Splash_Screen()
-
 
 while not done:
     
-
     #user input and controls
 
     game.logic()
     
+    #screen changes
     if screen_change != 'No':
         if screen_change == 'lvl1':
             game = Game()
@@ -1776,11 +1727,9 @@ while not done:
 
     for event in pygame.event.get():
         
-        
+        #exit game
         if event.type == pygame.QUIT:
             done = True
-        
-    
 
 #endwhile - End of game loop
 
